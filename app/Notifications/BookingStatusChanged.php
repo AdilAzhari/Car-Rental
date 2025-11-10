@@ -2,7 +2,10 @@
 
 namespace App\Notifications;
 
+use App\Enums\BookingStatus;
 use App\Models\Booking;
+use Filament\Actions\Action;
+use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
@@ -12,8 +15,8 @@ class BookingStatusChanged extends Notification
 
     public function __construct(
         public Booking $booking,
-        public string $oldStatus,
-        public string $newStatus
+        public BookingStatus $oldStatus,
+        public BookingStatus $newStatus
     ) {}
 
     public function via($notifiable): array
@@ -31,20 +34,17 @@ class BookingStatusChanged extends Notification
             'cancelled' => 'danger',
         ];
 
-        return [
-            'title' => 'Booking Status Changed',
-            'body' => "Booking #{$this->booking->id} status changed from {$this->oldStatus} to {$this->newStatus}",
-            'icon' => 'heroicon-o-arrow-path',
-            'icon_color' => $statusColors[$this->newStatus] ?? 'gray',
-            'booking_id' => $this->booking->id,
-            'old_status' => $this->oldStatus,
-            'new_status' => $this->newStatus,
-            'actions' => [
-                [
-                    'label' => 'View Booking',
-                    'url' => route('filament.admin.resources.bookings.edit', ['record' => $this->booking->id]),
-                ],
-            ],
-        ];
+        return FilamentNotification::make()
+            ->title('Booking Status Changed')
+            ->body("Booking #{$this->booking->id} status changed from {$this->oldStatus->value} to {$this->newStatus->value}")
+            ->icon('heroicon-o-arrow-path')
+            ->iconColor($statusColors[$this->newStatus->value] ?? 'gray')
+            ->actions([
+                Action::make('view')
+                    ->label('View Booking')
+                    ->url(route('filament.admin.resources.bookings.edit', ['record' => $this->booking->id]))
+                    ->button(),
+            ])
+            ->getDatabaseMessage();
     }
 }
