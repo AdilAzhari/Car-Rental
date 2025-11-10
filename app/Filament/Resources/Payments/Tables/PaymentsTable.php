@@ -8,6 +8,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\Summarizers\Average;
+use Filament\Tables\Columns\Summarizers\Count;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -21,7 +24,8 @@ class PaymentsTable
                 TextColumn::make('id')
                     ->label(__('resources.payment_id'))
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize(Count::make()->label('Total Payments')),
 
                 TextColumn::make('booking.id')
                     ->label(__('resources.booking_id'))
@@ -36,7 +40,11 @@ class PaymentsTable
                 TextColumn::make('amount')
                     ->label(__('resources.amount'))
                     ->money(config('app.currency', 'MYR'))
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize([
+                        Sum::make()->money(config('app.currency', 'MYR'))->label('Total'),
+                        Average::make()->money(config('app.currency', 'MYR'))->label('Average'),
+                    ]),
 
                 TextColumn::make('payment_method')
                     ->label(__('resources.payment_method'))
@@ -77,20 +85,15 @@ class PaymentsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                               SelectFilter::make('payment_status')
-                                   ->label(__('resources.payment_status'))
-                                   ->options(collect(PaymentStatus::cases())->mapWithKeys(fn($case) => [$case->value => $case->label()]))
-                                   ->multiple(),
+                SelectFilter::make('payment_status')
+                    ->label(__('resources.payment_status'))
+                    ->options(collect(PaymentStatus::cases())->mapWithKeys(fn($case) => [$case->value => $case->label()]))
+                    ->multiple(),
 
-                            //    SelectFilter::make('payment_method')
-                            //        ->label(__('resources.payment_method'))
-                            //        ->options(collect(PaymentMethod::cases())->mapWithKeys(fn($case) => [$case->value => $case->label()]))
-                            //        ->multiple(),
-
-                            //    SelectFilter::make('booking_id')
-                            //        ->label(__('resources.booking_id'))
-                            //        ->relationship('booking', 'id')
-                            //        ->searchable(),
+                SelectFilter::make('payment_method')
+                    ->label(__('resources.payment_method'))
+                    ->options(collect(PaymentMethod::cases())->mapWithKeys(fn($case) => [$case->value => $case->label()]))
+                    ->multiple(),
             ])
             ->recordActions([
                 EditAction::make(),

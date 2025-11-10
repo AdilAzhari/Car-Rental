@@ -19,7 +19,7 @@ class FilamentQueryOptimizationService
         return Booking::query()
             ->select([
                 'id', 'renter_id', 'vehicle_id', 'start_date', 'end_date',
-                'total_amount', 'status', 'created_at', 'updated_at', 'payment_status', 'dropoff_location', 'pickup_location', 'total_amount',
+                'total_amount', 'status', 'created_at', 'updated_at', 'payment_status', 'dropoff_location', 'pickup_location',
                 'insurance_fee', 'subtotal', 'days', 'daily_rate', 'tax_amount',
                 'special_requests',
             ])

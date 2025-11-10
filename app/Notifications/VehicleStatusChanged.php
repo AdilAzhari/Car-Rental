@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Vehicle;
+use Filament\Actions\Action as ActionsAction;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification as FilamentNotification;
 use Illuminate\Bus\Queueable;
@@ -39,7 +40,7 @@ class VehicleStatusChanged extends Notification
             ->icon('heroicon-o-truck')
             ->iconColor($statusColors[$this->newStatus] ?? 'gray')
             ->actions([
-                Action::make('view')
+                ActionsAction::make('view')
                     ->label('View Vehicle')
                     ->url(route('filament.admin.resources.vehicles.edit', ['record' => $this->vehicle->id]))
                     ->button(),

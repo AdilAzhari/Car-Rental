@@ -9,6 +9,9 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Summarizers\Average;
+use Filament\Tables\Columns\Summarizers\Count;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -123,6 +126,11 @@ class VehiclesTable
                 TextColumn::make('daily_rate')
                     ->label(__('resources.daily_rate'))
                     ->money(config('app.currency', 'MYR'))
+                    ->summarize([
+                        Average::make()->money(config('app.currency', 'MYR'))->label('Avg Rate'),
+                        Sum::make()->money(config('app.currency', 'MYR'))->label('Total Rates'),
+                        Count::make()->label('Total Vehicles'),
+                    ])
                     ->sortable(),
 
                 TextColumn::make('owner.name')

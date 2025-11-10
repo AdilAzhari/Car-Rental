@@ -20,6 +20,10 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Columns\Summarizers\Average;
+use Filament\Tables\Columns\Summarizers\Count;
+use Filament\Tables\Columns\Summarizers\Range;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 
 class BookingsTable
@@ -52,12 +56,21 @@ class BookingsTable
                 TextColumn::make('days')
                     ->label(__('resources.days'))
                     ->numeric()
-                    ->sortable(false),
+                    ->sortable(false)
+                    ->summarize([
+                        Sum::make()->label('Total Days Booked'),
+                        Average::make()->label('Avg Booking Duration'),
+                    ]),
 
                 TextColumn::make('total_amount')
                     ->label(__('resources.total_amount'))
                     ->money(config('app.currency', 'MYR'))
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize([
+                        Sum::make()->money(config('app.currency', 'MYR'))->label('Total Revenue'),
+                        Average::make()->money(config('app.currency', 'MYR'))->label('Average'),
+                        Count::make()->label('Total Bookings'),
+                    ]),
 
                 BadgeColumn::make('status')
                     ->label(__('resources.booking_status'))
