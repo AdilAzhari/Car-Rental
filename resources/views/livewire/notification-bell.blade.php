@@ -60,16 +60,22 @@
                                     $iconClass = match($notification['type']) {
                                         'App\Notifications\WelcomeNewUser' => 'text-green-500',
                                         'App\Notifications\BookingConfirmed' => 'text-blue-500',
+                                        'App\Notifications\BookingStatusChanged' => 'text-orange-500',
                                         'App\Notifications\PaymentReceived' => 'text-green-500',
                                         'App\Notifications\VehicleApproved' => 'text-green-500',
+                                        'App\Notifications\NewBookingCreated' => 'text-blue-500',
+                                        'App\Notifications\BookingCancelled' => 'text-red-500',
                                         default => 'text-gray-500'
                                     };
-                                    
+
                                     $icon = match($notification['type']) {
                                         'App\Notifications\WelcomeNewUser' => 'heroicon-s-user-plus',
                                         'App\Notifications\BookingConfirmed' => 'heroicon-s-calendar-days',
+                                        'App\Notifications\BookingStatusChanged' => 'heroicon-s-arrow-path',
                                         'App\Notifications\PaymentReceived' => 'heroicon-s-currency-dollar',
                                         'App\Notifications\VehicleApproved' => 'heroicon-s-truck',
+                                        'App\Notifications\NewBookingCreated' => 'heroicon-s-calendar',
+                                        'App\Notifications\BookingCancelled' => 'heroicon-s-x-circle',
                                         default => 'heroicon-s-bell'
                                     };
                                 @endphp
@@ -85,23 +91,34 @@
                                     {{ $notification['data']['title'] ?? __('notifications.new_notification') }}
                                 </p>
                                 <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                    {{ $notification['data']['message'] ?? '' }}
+                                    {{ $notification['data']['body'] ?? $notification['data']['message'] ?? '' }}
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">
                                     {{ \Carbon\Carbon::parse($notification['created_at'])->diffForHumans() }}
                                 </p>
                             </div>
-                            
+
                             <!-- Unread Indicator -->
                             <div class="flex-shrink-0">
                                 <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                             </div>
                         </div>
-                        
+
                         <!-- Action Buttons (if any) -->
-                        @if(isset($notification['data']['action_url']))
+                        @if(isset($notification['data']['actions']) && is_array($notification['data']['actions']))
+                            <div class="mt-3 ml-11 flex gap-2">
+                                @foreach($notification['data']['actions'] as $action)
+                                    <a
+                                        href="{{ $action['url'] ?? '#' }}"
+                                        class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 dark:text-blue-400 dark:bg-blue-900 dark:hover:bg-blue-800 transition-colors duration-150"
+                                    >
+                                        {{ $action['label'] ?? __('notifications.view') }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        @elseif(isset($notification['data']['action_url']))
                             <div class="mt-3 ml-11">
-                                <a 
+                                <a
                                     href="{{ $notification['data']['action_url'] }}"
                                     class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 dark:text-blue-400 dark:bg-blue-900 dark:hover:bg-blue-800 transition-colors duration-150"
                                 >
