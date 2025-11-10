@@ -53,8 +53,10 @@ class AdminPanelProvider extends PanelProvider
             ->maxContentWidth('full')
             ->spa()
             ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->unsavedChangesAlerts()
             ->databaseTransactions()
+            ->databaseNotifications()
             ->renderHook(
                 'panels::body.start',
                 fn (): string => view('filament.hooks.rtl-support')->render()
