@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\RelationManagers;
+namespace App\Filament\Resources\Users\RelationManagers;
 
 use App\Enums\BookingStatus;
 use App\Filament\Resources\Bookings\Schemas\BookingForm;
