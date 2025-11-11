@@ -24,54 +24,78 @@ class UserForm
             ->components([
 
                 Section::make(__('users.sections.personal_information'))
-                    ->description(__('resources.user_details_description'))
-                    ->icon('heroicon-m-user')
+    ->description(__('resources.user_details_description'))
+    ->icon('heroicon-m-user')
+    ->schema([
+        // Avatar upload with better positioning
+        FileUpload::make('avatar')
+            ->label(__('users.fields.avatar'))
+            ->directory('user-avatars')
+            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
+            ->helperText(__('resources.avatar_helper'))
+            ->maxSize(2048) // 2MB limit
+            ->validationMessages([
+                'max' => __('resources.file_size_max_error'),
+                'mimes' => __('resources.file_type_error'),
+            ])
+            ->image()
+            ->imageEditor()
+            ->avatar()
+            ->alignCenter()
+            ->columnSpanFull(),
+
+        Grid::make()
+            ->columns(1)
+            ->schema([
+                // Name field with better validation
+                TextInput::make('name')
+                    ->label(__('users.fields.name'))
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder(__('resources.enter_full_name'))
+                    ->autocomplete('name')
+                    ->suffixIcon('heroicon-m-user'),
+
+                // Contact information in a 2-column grid
+                Grid::make()
+                    ->columns(2)
                     ->schema([
+                        TextInput::make('email')
+                            ->label(__('users.fields.email'))
+                            ->email()
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255)
+                            ->placeholder(__('resources.email_placeholder'))
+                            ->autocomplete('email')
+                            ->suffixIcon('heroicon-m-envelope')
+                            ->prefixIcon('heroicon-m-at-symbol'),
 
-                                FileUpload::make('avatar')
-                                    ->label(__('users.fields.avatar'))
-                                    ->directory('user-avatars')
-                                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
-                                    ->helperText(__('resources.avatar_helper'))
-                                    ->validationMessages([
-                                        'max' => __('resources.file_size_max_error'),
-                                        'mimes' => __('resources.file_type_error'),
-                                    ])
-                                    ->avatar(),
-                        Grid::make(3)
-                            ->schema([
-                                TextInput::make('name')
-                                    ->label(__('users.fields.name'))
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->placeholder(__('resources.enter_full_name'))
-                                    ->columnSpan(2),
-
-                                TextInput::make('phone')
-                                    ->label(__('users.fields.phone'))
-                                    ->tel()
-                                    ->maxLength(20)
-                                    ->placeholder(__('resources.phone_placeholder'))
-                                    ->suffixIcon('heroicon-m-phone'),
-
-                                TextInput::make('email')
-                                    ->label(__('users.fields.email'))
-                                    ->email()
-                                    ->required()
-                                    ->unique(ignoreRecord: true)
-                                    ->maxLength(255)
-                                    ->placeholder(__('resources.email_placeholder'))
-                                    ->suffixIcon('heroicon-m-envelope')
-                                    ->columnSpan(2),
-
-                                DatePicker::make('date_of_birth')
-                                    ->label(__('users.fields.date_of_birth'))
-                                    ->maxDate(now()->subYears(18))
-                                    ->displayFormat('Y-m-d')
-                                    ->helperText(__('resources.age_requirement'))
-                                    ->suffixIcon('heroicon-m-calendar'),
-                            ]),
+                        TextInput::make('phone')
+                            ->label(__('users.fields.phone'))
+                            ->tel()
+                            ->maxLength(20)
+                            ->placeholder(__('resources.phone_placeholder'))
+                            ->autocomplete('tel')
+                            ->suffixIcon('heroicon-m-phone')
+                            ->prefixIcon('heroicon-m-device-phone-mobile'),
                     ]),
+
+                // Date of birth with better validation and formatting
+                DatePicker::make('date_of_birth')
+                    ->label(__('users.fields.date_of_birth'))
+                    ->required()
+                    ->maxDate(now()->subYears(18))
+                    ->minDate(now()->subYears(100)) // Reasonable minimum age
+                    ->displayFormat('Y-m-d')
+                    ->format('Y-m-d')
+                    ->helperText(__('resources.age_requirement'))
+                    ->suffixIcon('heroicon-m-calendar')
+                    ->placeholder(__('resources.select_date'))
+                    ->closeOnDateSelection()
+                    ->columnSpanFull(),
+            ]),
+        ]),
 
                 Section::make(__('resources.account_settings'))
                     ->description(__('resources.account_settings_description'))
@@ -206,27 +230,25 @@ class UserForm
                             ->columnSpanFull()
                             ->placeholder(__('resources.admin_notes_placeholder')),
                     ]),
+                    
+            Section::make('Account Status & Timestamps')
+                ->schema([
+                    // Single column for the important status toggle
+                    Toggle::make('has_changed_default_password')
+                        ->label('Changed Default Password')
+                        ->disabled()
+                        ->required(),
 
-                // grid::make(3)
-                //     ->schema([
-                // Toggle::make('has_changed_default_password')
-                //     ->required(),
-                // DateTimePicker::make('last_login_at'),
-                // DateTimePicker::make('password_changed_at'),
-                //     ]),
-Section::make('Account Status & Timestamps')
-    ->schema([
-        // Single column for the important status toggle
-        Toggle::make('has_changed_default_password')
-            ->label('Changed Default Password') // Add a more descriptive label
-            ->required(),
-
-        Grid::make(2)
-            ->schema([
-                DateTimePicker::make('last_login_at'),
-                DateTimePicker::make('password_changed_at'),
-            ]),
-    ]),
+                    Grid::make(2)
+                        ->schema([
+                            DateTimePicker::make('last_login_at')
+                                ->label('Last Login At')
+                                ->disabled(),
+                            DateTimePicker::make('password_changed_at')
+                                ->label('Password Changed At')
+                                ->disabled(),
+                        ]),
+                ]),
             ]);
     }
 }
