@@ -567,4 +567,5 @@ return [
     'confirm_password_placeholder' => 'أدخل كلمة المرور الجديدة مرة أخرى',
     'hide_selected' => 'إخفاء المحدد',
     'show_selected' => 'إظهار المحدد',
+    'values_properties' => 'قيم الخصائص',
 ];

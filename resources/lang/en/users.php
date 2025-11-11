@@ -13,6 +13,7 @@ return [
     ],
 
     'fields' => [
+        'avatar' => 'Profile Picture',
         'name' => 'Full Name',
         'email' => 'Email Address',
         'phone' => 'Phone Number',

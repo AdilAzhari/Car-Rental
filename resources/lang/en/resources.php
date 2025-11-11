@@ -582,4 +582,5 @@ return [
     'password_placeholder' => 'Enter a secure password at least 8 characters long',
     'hide_selected' => 'Hide Selected',
     'show_selected' => 'Show Selected',
+    'values_properties' => 'Values Properties',
 ];
