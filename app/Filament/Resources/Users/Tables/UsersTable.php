@@ -51,7 +51,10 @@ class UsersTable
           ->columns([
                 ImageColumn::make('avatar')
                     ->imageHeight(40)
+                    ->defaultImageUrl(url('/images/User-placeholder.jpg'))
+                    ->visibleFrom('md')
                     ->circular(),
+                    
                 TextColumn::make('name')
                     ->label(__('resources.name'))
                     ->searchable()
