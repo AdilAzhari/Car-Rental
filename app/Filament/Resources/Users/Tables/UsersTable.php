@@ -53,7 +53,9 @@ class UsersTable
                     ->imageHeight(40)
                     ->defaultImageUrl(url('/images/User-placeholder.jpg'))
                     ->visibleFrom('md')
-                    ->circular(),
+                    ->circular()
+                    ->toggleable()
+                    ->getStateUsing(fn ($record) => $record->avatar ?: ''),
                     
                 TextColumn::make('name')
                     ->label(__('resources.name'))
@@ -182,7 +184,8 @@ class UsersTable
                 FilamentExportHeaderAction::make('export')
                     ->label(__('widgets.export'))
                     ->color('success')
-                    ->icon('heroicon-m-arrow-down-tray'),
+                    ->icon('heroicon-m-arrow-down-tray')
+                    ->except(['avatar']),
             ])
             ->recordActions([
                 ViewAction::make()
@@ -236,7 +239,8 @@ class UsersTable
                     RestoreBulkAction::make(),
                     FilamentExportBulkAction::make('bulk_export')
                         ->label(__('widgets.export'))
-                        ->icon('heroicon-m-arrow-down-tray'),
+                        ->icon('heroicon-m-arrow-down-tray')
+                        ->except(['avatar']),
                 ]),
             ]);
     }
