@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebFetch(domain:www.flaticon.com)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
