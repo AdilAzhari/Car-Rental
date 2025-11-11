@@ -32,9 +32,6 @@ class UserForm
                                     ->label(__('users.fields.avatar'))
                                     ->directory('user-avatars')
                                     ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
-                                    // ->maxSize(5120)
-                                    // ->circle()
-                                    // ->previewHeight(100)
                                     ->helperText(__('resources.avatar_helper'))
                                     ->validationMessages([
                                         'max' => __('resources.file_size_max_error'),
