@@ -42,14 +42,16 @@ use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-
-
+use Filament\Tables\Columns\ImageColumn;
 class UsersTable
 {
     public static function configure(Table $table): Table
     {
         return $table
           ->columns([
+                ImageColumn::make('avatar')
+                    ->imageHeight(40)
+                    ->circular(),
                 TextColumn::make('name')
                     ->label(__('resources.name'))
                     ->searchable()
@@ -92,19 +94,19 @@ class UsersTable
                 TextColumn::make('status')
                     ->label(__('resources.status'))
                     ->badge()
-                    ->color(fn (UserStatus $state): string => match ($state) {
+                    ->color(fn ($state): string => match ($state instanceof UserStatus ? $state->value : $state) {
                         'active' => 'success',
                         'approved' => 'info',
                         'pending' => 'warning',
                         'rejected' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (UserStatus $state): UserStatus => match ($state) {
+                    ->formatStateUsing(fn ($state): string => match ($state instanceof UserStatus ? $state->value : $state) {
                         'active' => __('enums.user_status.active'),
                         'approved' => __('enums.user_status.approved'),
                         'pending' => __('enums.user_status.pending'),
                         'rejected' => __('enums.user_status.rejected'),
-                        default => $state,
+                        default => (string) $state,
                     }),
 
                 TextColumn::make('phone')
