@@ -580,4 +580,6 @@ return [
     'commission_amount' => 'Commission Amount',
     'confirm_password_placeholder' => 'Re-enter your new password',
     'password_placeholder' => 'Enter a secure password at least 8 characters long',
+    'hide_selected' => 'Hide Selected',
+    'show_selected' => 'Show Selected',
 ];

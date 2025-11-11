@@ -565,4 +565,6 @@ return [
     'password_placeholder' => 'اتركه فارغًا للحفاظ على كلمة المرور الحالية',
     'confirm_new_password' => 'تأكيد كلمة المرور الجديدة',
     'confirm_password_placeholder' => 'أدخل كلمة المرور الجديدة مرة أخرى',
+    'hide_selected' => 'إخفاء المحدد',
+    'show_selected' => 'إظهار المحدد',
 ];
