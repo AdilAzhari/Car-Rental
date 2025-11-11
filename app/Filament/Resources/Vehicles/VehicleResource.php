@@ -107,7 +107,9 @@ class VehicleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\BookingsRelationManager::class,
+            RelationManagers\ImagesRelationManager::class,
+            RelationManagers\ReviewsRelationManager::class,
         ];
     }
 
