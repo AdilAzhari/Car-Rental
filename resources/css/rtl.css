@@ -1,0 +1,115 @@
+/* RTL Support for Arabic */
+[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .fi-logo {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+[dir="rtl"] .fi-sidebar-nav-item {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-sidebar-nav-icon {
+    margin-left: 0.75rem;
+    margin-right: 0;
+}
+
+[dir="rtl"] .fi-form-field-wrapper {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-input {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-select {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-checkbox {
+    float: right;
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+[dir="rtl"] .fi-radio {
+    float: right;
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+[dir="rtl"] .fi-table-header-cell {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-table-cell {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .fi-breadcrumbs {
+    direction: rtl;
+}
+
+[dir="rtl"] .fi-breadcrumb-item::after {
+    content: "‹";
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .fi-modal {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-notification {
+    text-align: right;
+}
+
+/* Arabic Font Improvements */
+[dir="rtl"] * {
+    font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
+}
+
+/* Fix button alignments */
+[dir="rtl"] .fi-ac-button-group {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .fi-ac-button-group .fi-btn {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+[dir="rtl"] .fi-ac-button-group .fi-btn:first-child {
+    margin-left: 0;
+}
+
+/* Navigation improvements */
+[dir="rtl"] .fi-topbar-nav {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .fi-avatar {
+    margin-left: 0;
+    margin-right: 0.75rem;
+}
+
+/* Form layout improvements */
+[dir="rtl"] .fi-fo-component-ctn {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-fo-field-wrp-label {
+    text-align: right;
+}
+
+[dir="rtl"] .fi-fo-field-wrp-hint {
+    text-align: right;
+}

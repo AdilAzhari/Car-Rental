@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Enums\VehicleStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Vehicle;
 use Exception;
@@ -17,7 +18,7 @@ class CarController extends Controller
             // Get featured/popular cars for homepage
             $cars = Vehicle::with(['images'])
                 ->where('is_available', true)
-                ->where('status', 'published')
+                ->where('status', VehicleStatus::PUBLISHED)
                 ->orderBy('created_at', 'desc')
                 ->limit(20)
                 ->get()
@@ -47,7 +48,7 @@ class CarController extends Controller
         // Get all cars with filters for the cars listing page
         $lengthAwarePaginator = Vehicle::with(['images'])
             ->where('is_available', true)
-            ->where('status', 'published')
+            ->where('status', VehicleStatus::PUBLISHED)
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 
@@ -61,7 +62,7 @@ class CarController extends Controller
         $vehicle = Vehicle::with(['images', 'owner'])
             ->where('id', $id)
             ->where('is_available', true)
-            ->where('status', 'published')
+            ->where('status', VehicleStatus::PUBLISHED)
             ->firstOrFail();
 
         return Inertia::render('Cars/Show', [

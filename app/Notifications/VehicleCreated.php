@@ -19,10 +19,16 @@ class VehicleCreated extends Notification
 
     public function toArray(object $notifiable): array
     {
+        $ownerName = $this->vehicle->owner ? $this->vehicle->owner->name : 'Unknown Owner';
+
         return [
-            'message' => "New vehicle '{$this->vehicle->make} {$this->vehicle->model}' has been created.",
+            'title' => 'New Vehicle Submission',
+            'message' => "A new vehicle '{$this->vehicle->make} {$this->vehicle->model}' ({$this->vehicle->year}) has been submitted by {$ownerName} for approval.",
             'vehicle_id' => $this->vehicle->id,
+            'vehicle_status' => $this->vehicle->status->value,
+            'owner_name' => $ownerName,
             'action_url' => route('filament.admin.resources.vehicles.edit', $this->vehicle),
+            'action_label' => 'Review Vehicle',
         ];
     }
 }

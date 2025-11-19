@@ -9,6 +9,7 @@ use App\Filament\Resources\Payments\Pages\ListPayments;
 use App\Filament\Resources\Payments\Schemas\PaymentForm;
 use App\Filament\Resources\Payments\Tables\PaymentsTable;
 use App\Models\Payment;
+use App\Policies\PaymentPolicy;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -20,6 +21,8 @@ use Override;
 class PaymentResource extends Resource
 {
     protected static ?string $model = Payment::class;
+
+    protected static string $policy = PaymentPolicy::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
 
@@ -54,6 +57,33 @@ class PaymentResource extends Resource
             'create' => CreatePayment::route('/create'),
             'edit' => EditPayment::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        if (!$user) {
+            return $query->whereRaw('1 = 0'); // Return empty result
+        }
+
+        // Admin sees all payments
+        if ($user->role === UserRole::ADMIN) {
+            return $query;
+        }
+
+        // Owner sees payments for bookings on their vehicles
+        if ($user->role === UserRole::OWNER) {
+            return $query->whereHas('booking.vehicle', function ($q) use ($user) {
+                $q->where('owner_id', $user->id);
+            });
+        }
+
+        // Renter sees only their booking payments
+        return $query->whereHas('booking', function ($q) use ($user) {
+            $q->where('renter_id', $user->id);
+        });
     }
 
     public static function getNavigationBadge(): ?string

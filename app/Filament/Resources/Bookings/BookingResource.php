@@ -123,6 +123,25 @@ class BookingResource extends Resource
     }
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count() ?: null;
+        $user = auth()->user();
+
+        if (!$user) {
+            return null;
+        }
+
+        // Admin sees all bookings count
+        if ($user->role === UserRole::ADMIN) {
+            return static::getModel()::count() ?: null;
+        }
+
+        // Owner sees bookings count for their vehicles
+        if ($user->role === UserRole::OWNER) {
+            return static::getModel()::whereHas('vehicle', function ($q) use ($user) {
+                $q->where('owner_id', $user->id);
+            })->count() ?: null;
+        }
+
+        // Renter sees only their bookings count
+        return static::getModel()::where('renter_id', $user->id)->count() ?: null;
     }
 }

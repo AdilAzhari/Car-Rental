@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Review;
 use App\Models\User;
 
@@ -22,9 +23,9 @@ class ReviewPolicy
     public function view(User $user, Review $review): bool
     {
         // Admin can view all, renters can view their own reviews, owners can view reviews for their vehicles
-        return $user->role === 'admin' ||
+        return $user->role === UserRole::ADMIN ||
                $review->renter_id === $user->id ||
-               ($user->role === 'owner' && $review->vehicle->owner_id === $user->id);
+               ($user->role === UserRole::OWNER && $review->vehicle->owner_id === $user->id);
     }
 
     /**
@@ -33,7 +34,7 @@ class ReviewPolicy
     public function create(User $user): bool
     {
         // Admins and renters can create reviews
-        return $user->role === 'admin' || $user->role === 'renter';
+        return $user->role === UserRole::ADMIN || $user->role === UserRole::RENTER;
     }
 
     /**
@@ -42,7 +43,7 @@ class ReviewPolicy
     public function update(User $user, Review $review): bool
     {
         // Admin can update all, renters can update their own reviews
-        return $user->role === 'admin' || $review->renter_id === $user->id;
+        return $user->role === UserRole::ADMIN || $review->renter_id === $user->id;
     }
 
     /**
@@ -51,7 +52,7 @@ class ReviewPolicy
     public function delete(User $user, Review $review): bool
     {
         // Admin can delete all, renters can delete their own reviews
-        return $user->role === 'admin' || $review->renter_id === $user->id;
+        return $user->role === UserRole::ADMIN || $review->renter_id === $user->id;
     }
 
     /**
@@ -60,7 +61,7 @@ class ReviewPolicy
     public function restore(User $user, Review $review): bool
     {
         // Only admins can restore reviews
-        return $user->role === 'admin';
+        return $user->role === UserRole::ADMIN;
     }
 
     /**
@@ -69,6 +70,6 @@ class ReviewPolicy
     public function forceDelete(User $user, Review $review): bool
     {
         // Only admins can permanently delete reviews
-        return $user->role === 'admin';
+        return $user->role === UserRole::ADMIN;
     }
 }

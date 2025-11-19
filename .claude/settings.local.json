@@ -4,7 +4,10 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "WebFetch(domain:www.flaticon.com)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(php artisan:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

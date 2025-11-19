@@ -12,9 +12,11 @@ use Filament\Tables\Table;
 
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use App\Enums\UserRole;
 use App\Filament\Resources\ReviewResource\Pages;
 use App\Filament\Resources\ReviewResource\Schemas\ReviewInfolist;
 use App\Models\Review;
+use App\Policies\ReviewPolicy;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
@@ -40,6 +42,8 @@ use Illuminate\Database\Eloquent\Builder;
 class ReviewResource extends Resource
 {
     protected static ?string $model = Review::class;
+
+    protected static string $policy = ReviewPolicy::class;
 
     protected static string|null|BackedEnum $navigationIcon = 'heroicon-o-star';
 
@@ -93,14 +97,54 @@ class ReviewResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count() ?: null;
+        $user = auth()->user();
+
+        if (!$user) {
+            return null;
+        }
+
+        // Admin sees all reviews count
+        if ($user->role === UserRole::ADMIN) {
+            return static::getModel()::count() ?: null;
+        }
+
+        // Owner sees reviews count for their vehicles
+        if ($user->role === UserRole::OWNER) {
+            return static::getModel()::whereHas('vehicle', function ($q) use ($user) {
+                $q->where('owner_id', $user->id);
+            })->count() ?: null;
+        }
+
+        // Renter sees only their reviews count
+        return static::getModel()::where('renter_id', $user->id)->count() ?: null;
     }
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        $totalCount = static::getModel()::count();
+        $user = auth()->user();
 
-        return $totalCount > 0 ? 'primary' : 'gray';
+        if (!$user) {
+            return 'gray';
+        }
+
+        $count = 0;
+
+        // Admin sees all reviews count
+        if ($user->role === UserRole::ADMIN) {
+            $count = static::getModel()::count();
+        }
+        // Owner sees reviews count for their vehicles
+        elseif ($user->role === UserRole::OWNER) {
+            $count = static::getModel()::whereHas('vehicle', function ($q) use ($user) {
+                $q->where('owner_id', $user->id);
+            })->count();
+        }
+        // Renter sees only their reviews count
+        else {
+            $count = static::getModel()::where('renter_id', $user->id)->count();
+        }
+
+        return $count > 0 ? 'primary' : 'gray';
     }
 
     public static function getGloballySearchableAttributes(): array
@@ -130,10 +174,26 @@ class ReviewResource extends Resource
     #[\Override]
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->when(auth()->user()->role === 'renter', fn ($query) => $query->where('renter_id', auth()->id()))
-            ->when(auth()->user()->role === 'owner', fn ($query) => $query->whereHas('vehicle', function ($vehicleQuery): void {
-                $vehicleQuery->where('owner_id', auth()->id());
-            }));
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        if (!$user) {
+            return $query->whereRaw('1 = 0'); // Return empty result
+        }
+
+        // Admin sees all reviews
+        if ($user->role === UserRole::ADMIN) {
+            return $query;
+        }
+
+        // Owner sees reviews for their vehicles
+        if ($user->role === UserRole::OWNER) {
+            return $query->whereHas('vehicle', function ($vehicleQuery) use ($user): void {
+                $vehicleQuery->where('owner_id', $user->id);
+            });
+        }
+
+        // Renter sees only their own reviews
+        return $query->where('renter_id', $user->id);
     }
 }

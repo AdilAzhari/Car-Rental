@@ -567,10 +567,6 @@ return [
     'daily_rate_max' => 'Daily rental rate is too high',
 
     // Document Upload Messages
-    'id_document' => 'ID Document',
-    'id_document_helper' => 'Upload a copy of your ID card or passport (Image or PDF, max 10MB)',
-    'license_document' => 'Driver License Document',
-    'license_document_helper' => 'Upload a copy of your driver license (Image or PDF, max 10MB)',
     'file_size_max_error' => 'File size cannot exceed 10MB',
     'file_type_error' => 'File must be an image (JPG, PNG) or PDF',
     'maintenance_records' => 'Maintenance Records',
@@ -583,4 +579,5 @@ return [
     'hide_selected' => 'Hide Selected',
     'show_selected' => 'Show Selected',
     'values_properties' => 'Values Properties',
+    'reviewed_on' => 'Reviewed On',
 ];

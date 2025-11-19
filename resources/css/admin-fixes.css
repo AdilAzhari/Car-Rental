@@ -1,0 +1,74 @@
+/* Fix dropdown positioning issues */
+[x-data*="selectField"] .fi-fo-select-menu {
+    z-index: 9999 !important;
+    position: fixed !important;
+}
+
+/* Ensure dropdowns appear above modals and other elements */
+.fi-fo-field-wrp [x-data*="select"] > div > div > div {
+    z-index: 9999 !important;
+}
+
+/* Fix positioning for Select2-style dropdowns */
+.choices__list--dropdown {
+    z-index: 9999 !important;
+    position: fixed !important;
+}
+
+/* Ensure proper positioning for Filament native selects */
+[data-dropdown-trigger] + [data-dropdown-content] {
+    z-index: 9999 !important;
+}
+
+/* Fix bookmark/create page width issues */
+.fi-main {
+    max-width: none !important;
+}
+
+.fi-page {
+    max-width: none !important;
+}
+
+/* Ensure form containers use full width */
+.fi-fo-component-ctn {
+    max-width: none !important;
+}
+
+/* Fix tabs to use full width */
+.fi-tabs {
+    width: 100% !important;
+}
+
+/* Responsive grid improvements */
+@media (min-width: 768px) {
+    .fi-fo-grid > div {
+        display: grid;
+        gap: 1rem;
+    }
+    
+    .fi-fo-grid[data-cols="2"] > div {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .fi-fo-grid[data-cols="3"] > div {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* RTL support for dropdowns */
+[dir="rtl"] [x-data*="selectField"] .fi-fo-select-menu {
+    right: 0 !important;
+    left: auto !important;
+}
+
+/* Better spacing for form sections */
+.fi-fo-section {
+    margin-bottom: 2rem;
+}
+
+/* Improved button alignment */
+.fi-ac-btn-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}

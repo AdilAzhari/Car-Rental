@@ -1,0 +1,192 @@
+{
+  "app": {
+    "name": "CarRent",
+    "tagline": "Premium Car Rental Redefined"
+  },
+  "navigation": {
+    "home": "Home",
+    "cars": "Cars",
+    "bookings": "My Bookings",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "profile": "Profile"
+  },
+  "hero": {
+    "title": "Premium Car Rental",
+    "subtitle": "Redefined",
+    "description": "Experience luxury, comfort, and reliability with our premium fleet. Your perfect journey starts here.",
+    "search_vehicles": "Search Vehicles",
+    "browse_all": "Browse All Vehicles",
+    "learn_more": "Learn More"
+  },
+  "search": {
+    "pickup_location": "Pickup Location",
+    "pickup_date": "Pickup Date",
+    "return_date": "Return Date",
+    "vehicle_type": "Vehicle Type",
+    "select_location": "Select location",
+    "any_type": "Any type"
+  },
+  "locations": {
+    "downtown": "Downtown",
+    "airport": "Airport",
+    "suburb": "Suburb"
+  },
+  "vehicle_types": {
+    "economy": "Economy",
+    "standard": "Standard",
+    "luxury": "Luxury",
+    "suv": "SUV"
+  },
+  "features": {
+    "title": "Why Choose CarRent?",
+    "description": "We provide exceptional service and premium vehicles to make your journey unforgettable.",
+    "premium_fleet": {
+      "title": "Premium Fleet",
+      "description": "Choose from our collection of luxury vehicles, all maintained to the highest standards for your comfort and safety."
+    },
+    "support_24_7": {
+      "title": "24/7 Support",
+      "description": "Our dedicated support team is available around the clock to assist you with any questions or concerns."
+    },
+    "best_prices": {
+      "title": "Best Prices",
+      "description": "Competitive rates with transparent pricing. No hidden fees, just honest pricing for exceptional service."
+    }
+  },
+  "vehicles": {
+    "popular_title": "Popular Vehicles",
+    "popular_description": "Discover our most loved vehicles, perfect for any occasion.",
+    "why_choose_title": "Why Choose Our Fleet?",
+    "why_choose_description": "Experience the difference with our premium vehicle rental service.",
+    "explore_fleet": "Explore Our Fleet",
+    "view_all": "View All Cars",
+    "view_details": "View Details",
+    "reserve_now": "Reserve Now",
+    "book_now": "Book Now",
+    "per_day": "per day",
+    "available": "Available",
+    "unavailable": "Unavailable"
+  },
+  "benefits": {
+    "verified_vehicles": "Verified Vehicles",
+    "verified_description": "Every vehicle in our fleet is thoroughly inspected and certified for safety and reliability.",
+    "best_prices": "Competitive Pricing",
+    "prices_description": "Get the best value with our competitive rates and transparent pricing policy.",
+    "instant_booking": "Instant Booking",
+    "booking_description": "Book your perfect vehicle instantly with our streamlined reservation system."
+  },
+  "stats": {
+    "happy_customers": "Happy Customers",
+    "premium_cars": "Premium Cars",
+    "locations": "Locations",
+    "support": "Support"
+  },
+  "cta": {
+    "ready_title": "Ready to Hit the Road?",
+    "ready_description": "Join thousands of satisfied customers who trust CarRent for their transportation needs. Book your perfect car today!",
+    "browse_now": "Browse Cars Now",
+    "create_account": "Create Account"
+  },
+  "currency": {
+    "symbol": "RM",
+    "code": "MYR"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "apply": "Apply",
+    "close": "Close"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot password?",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "name": "Name",
+    "phone": "Phone"
+  },
+  "booking": {
+    "my_bookings": "My Bookings",
+    "booking_details": "Booking Details",
+    "booking_id": "Booking ID",
+    "status": "Status",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "total_amount": "Total Amount",
+    "payment_status": "Payment Status",
+    "vehicle_details": "Vehicle Details",
+    "make_payment": "Make Payment",
+    "cancel_booking": "Cancel Booking"
+  },
+  "reservation": {
+    "complete_reservation": "Complete Your Reservation",
+    "secure_booking": "Secure your vehicle booking in just a few steps",
+    "back_to_details": "Back to Details",
+    "car_details": "Car Details",
+    "booking_details": "Booking Details",
+    "booking_summary": "Booking Summary",
+    "payment_method": "Payment Method",
+    "instant_confirmation": "Instant confirmation",
+    "recommended": "Recommended",
+    "pay_at_pickup": "Pay at pickup - Pending confirmation",
+    "special_requests": "Special Requests (Optional)",
+    "special_requests_placeholder": "Any special requests or notes for the car owner...",
+    "terms_agreement": "I agree to the {termsLink} and {privacyLink}, and confirm that all information provided is accurate.",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+    "daily_rate": "Daily Rate",
+    "days": "days",
+    "day": "day",
+    "total": "Total",
+    "taxes_included": "Taxes and fees included",
+    "cash_payment": "Cash Payment",
+    "cash_pending_note": "Your booking will be pending until the owner confirms.",
+    "instant_booking": "Instant Confirmation",
+    "instant_booking_note": "Your booking will be confirmed immediately.",
+    "processing": "Processing...",
+    "request_booking": "Request Booking",
+    "confirm_book": "Confirm & Book",
+    "no_payment_now": "No payment required now",
+    "charged_immediately": "You'll be charged immediately",
+    "booking_confirmed": "Booking Confirmed!",
+    "booking_pending": "Booking Pending Approval",
+    "confirmation_email": "Your vehicle reservation has been confirmed. You'll receive a confirmation email shortly.",
+    "pending_approval": "Your booking request has been submitted and is pending approval.",
+    "action_required": "Action Required",
+    "contact_admin": "Please contact our admin to confirm your cash payment booking:",
+    "contact_whatsapp": "Contact via WhatsApp",
+    "send_email": "Send Email",
+    "admin_contact": "Admin Contact:",
+    "close_contact_admin": "Close & Contact Admin",
+    "view_my_bookings": "View My Bookings",
+    "unable_load_car": "Unable to load car details",
+    "try_again_contact": "Please try again or contact support if the problem persists.",
+    "seats": "seats",
+    "vehicle": "Vehicle",
+    "dates": "Dates",
+    "to": "to",
+    "confirmed": "Confirmed",
+    "pending_approval_status": "Pending Approval"
+  }
+}

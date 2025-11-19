@@ -1,0 +1,192 @@
+{
+  "app": {
+    "name": "كار رنت",
+    "tagline": "تأجير السيارات المتميز المعاد تعريفه"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "cars": "السيارات",
+    "bookings": "حجوزاتي",
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "profile": "الملف الشخصي"
+  },
+  "hero": {
+    "title": "تأجير السيارات المتميز",
+    "subtitle": "المعاد تعريفه",
+    "description": "اختبر الفخامة والراحة والموثوقية مع أسطولنا المتميز. رحلتك المثالية تبدأ من هنا.",
+    "search_vehicles": "البحث عن المركبات",
+    "browse_all": "تصفح جميع السيارات",
+    "learn_more": "اعرف أكثر"
+  },
+  "search": {
+    "pickup_location": "موقع الاستلام",
+    "pickup_date": "تاريخ الاستلام",
+    "return_date": "تاريخ الإرجاع",
+    "vehicle_type": "نوع المركبة",
+    "select_location": "اختر الموقع",
+    "any_type": "أي نوع"
+  },
+  "locations": {
+    "downtown": "وسط المدينة",
+    "airport": "المطار",
+    "suburb": "الضواحي"
+  },
+  "vehicle_types": {
+    "economy": "اقتصادي",
+    "standard": "قياسي",
+    "luxury": "فاخر",
+    "suv": "دفع رباعي"
+  },
+  "features": {
+    "title": "لماذا تختار كار رنت؟",
+    "description": "نحن نوفر خدمة استثنائية ومركبات متميزة لجعل رحلتك لا تُنسى.",
+    "premium_fleet": {
+      "title": "أسطول متميز",
+      "description": "اختر من مجموعتنا من المركبات الفاخرة، جميعها مُصانة بأعلى المعايير من أجل راحتك وسلامتك."
+    },
+    "support_24_7": {
+      "title": "دعم 24/7",
+      "description": "فريق الدعم المخصص لدينا متاح على مدار الساعة لمساعدتك في أي أسئلة أو مخاوف."
+    },
+    "best_prices": {
+      "title": "أفضل الأسعار",
+      "description": "أسعار تنافسية مع تسعير شفاف. لا توجد رسوم خفية، فقط تسعير صادق لخدمة استثنائية."
+    }
+  },
+  "vehicles": {
+    "popular_title": "السيارات الشائعة",
+    "popular_description": "اكتشف سياراتنا الأكثر حباً، مثالية لأي مناسبة.",
+    "why_choose_title": "لماذا تختار أسطولنا؟",
+    "why_choose_description": "اختبر الفرق مع خدمة تأجير المركبات المتميزة لدينا.",
+    "explore_fleet": "استكشف أسطولنا",
+    "view_all": "عرض جميع السيارات",
+    "view_details": "عرض التفاصيل",
+    "reserve_now": "احجز الآن",
+    "book_now": "احجز الآن",
+    "per_day": "في اليوم",
+    "available": "متاح",
+    "unavailable": "غير متاح"
+  },
+  "benefits": {
+    "verified_vehicles": "مركبات معتمدة",
+    "verified_description": "كل مركبة في أسطولنا تخضع للفحص الشامل والاعتماد للسلامة والموثوقية.",
+    "best_prices": "أسعار تنافسية",
+    "prices_description": "احصل على أفضل قيمة مع أسعارنا التنافسية وسياسة التسعير الشفافة.",
+    "instant_booking": "حجز فوري",
+    "booking_description": "احجز مركبتك المثالية فوراً مع نظام الحجز المبسط لدينا."
+  },
+  "stats": {
+    "happy_customers": "عميل سعيد",
+    "premium_cars": "سيارة متميزة",
+    "locations": "موقع",
+    "support": "دعم"
+  },
+  "cta": {
+    "ready_title": "جاهز لبدء الرحلة؟",
+    "ready_description": "انضم إلى آلاف العملاء الراضين الذين يثقون في كار رنت لاحتياجاتهم في النقل. احجز سيارتك المثالية اليوم!",
+    "browse_now": "تصفح السيارات الآن",
+    "create_account": "إنشاء حساب"
+  },
+  "currency": {
+    "symbol": "ر.م",
+    "code": "MYR"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "view": "عرض",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "clear": "مسح",
+    "apply": "تطبيق",
+    "close": "إغلاق"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "remember_me": "تذكرني",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "no_account": "ليس لديك حساب؟",
+    "have_account": "لديك حساب بالفعل؟",
+    "name": "الاسم",
+    "phone": "الهاتف"
+  },
+  "booking": {
+    "my_bookings": "حجوزاتي",
+    "booking_details": "تفاصيل الحجز",
+    "booking_id": "رقم الحجز",
+    "status": "الحالة",
+    "start_date": "تاريخ البداية",
+    "end_date": "تاريخ النهاية",
+    "total_amount": "المبلغ الإجمالي",
+    "payment_status": "حالة الدفع",
+    "vehicle_details": "تفاصيل المركبة",
+    "make_payment": "قم بالدفع",
+    "cancel_booking": "إلغاء الحجز"
+  },
+  "reservation": {
+    "complete_reservation": "أكمل حجزك",
+    "secure_booking": "قم بتأمين حجز مركبتك في خطوات قليلة",
+    "back_to_details": "العودة للتفاصيل",
+    "car_details": "تفاصيل السيارة",
+    "booking_details": "تفاصيل الحجز",
+    "booking_summary": "ملخص الحجز",
+    "payment_method": "طريقة الدفع",
+    "instant_confirmation": "تأكيد فوري",
+    "recommended": "موصى به",
+    "pay_at_pickup": "ادفع عند الاستلام - في انتظار التأكيد",
+    "special_requests": "طلبات خاصة (اختياري)",
+    "special_requests_placeholder": "أي طلبات خاصة أو ملاحظات لمالك السيارة...",
+    "terms_agreement": "أوافق على {termsLink} و {privacyLink}، وأؤكد أن جميع المعلومات المقدمة صحيحة.",
+    "terms_of_service": "شروط الخدمة",
+    "privacy_policy": "سياسة الخصوصية",
+    "daily_rate": "السعر اليومي",
+    "days": "أيام",
+    "day": "يوم",
+    "total": "الإجمالي",
+    "taxes_included": "الضرائب والرسوم مشمولة",
+    "cash_payment": "دفع نقدي",
+    "cash_pending_note": "سيكون حجزك في انتظار تأكيد المالك.",
+    "instant_booking": "تأكيد فوري",
+    "instant_booking_note": "سيتم تأكيد حجزك فوراً.",
+    "processing": "جاري المعالجة...",
+    "request_booking": "طلب حجز",
+    "confirm_book": "تأكيد والحجز",
+    "no_payment_now": "لا يوجد دفع مطلوب الآن",
+    "charged_immediately": "سيتم تحصيل المبلغ فوراً",
+    "booking_confirmed": "تم تأكيد الحجز!",
+    "booking_pending": "الحجز في انتظار الموافقة",
+    "confirmation_email": "تم تأكيد حجز مركبتك. ستتلقى رسالة تأكيد بالبريد الإلكتروني قريباً.",
+    "pending_approval": "تم إرسال طلب الحجز وهو في انتظار الموافقة.",
+    "action_required": "إجراء مطلوب",
+    "contact_admin": "يرجى التواصل مع الإدارة لتأكيد حجز الدفع النقدي:",
+    "contact_whatsapp": "التواصل عبر واتساب",
+    "send_email": "إرسال بريد إلكتروني",
+    "admin_contact": "جهة اتصال الإدارة:",
+    "close_contact_admin": "إغلاق والتواصل مع الإدارة",
+    "view_my_bookings": "عرض حجوزاتي",
+    "unable_load_car": "تعذر تحميل تفاصيل السيارة",
+    "try_again_contact": "يرجى المحاولة مرة أخرى أو التواصل مع الدعم إذا استمرت المشكلة.",
+    "seats": "مقاعد",
+    "vehicle": "المركبة",
+    "dates": "التواريخ",
+    "to": "إلى",
+    "confirmed": "مؤكد",
+    "pending_approval_status": "في انتظار الموافقة"
+  }
+}

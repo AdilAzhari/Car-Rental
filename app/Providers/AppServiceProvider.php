@@ -13,6 +13,7 @@ use App\Observers\ReviewObserver;
 use App\Observers\UserObserver;
 use App\Observers\VehicleObserver;
 use App\Policies\BookingPolicy;
+use App\Policies\PaymentPolicy;
 use App\Policies\ReviewPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\VehiclePolicy;
@@ -54,6 +55,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Vehicle::class, VehiclePolicy::class);
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Booking::class, BookingPolicy::class);
+        Gate::policy(Payment::class, PaymentPolicy::class);
         Gate::policy(Review::class, ReviewPolicy::class);
 
         // Register model observers

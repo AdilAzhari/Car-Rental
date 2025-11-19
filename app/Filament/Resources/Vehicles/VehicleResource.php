@@ -20,10 +20,13 @@ use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Enums\VehicleStatus;
+use App\Filament\Resources\Users\RelationManagers\ReviewsRelationManager;
 use App\Filament\Resources\VehicleResource\Pages;
 use App\Filament\Resources\VehicleResource\RelationManagers;
 use App\Filament\Resources\VehicleResource\Schemas\VehicleInfolist;
+use App\Filament\Resources\Vehicles\RelationManagers\BookingsRelationManager;
 use App\Models\User;
+use App\Policies\VehiclePolicy;
 use App\Services\FilamentQueryOptimizationService;
 use App\Services\TrafficViolationService;
 use Filament\Actions\Action;
@@ -54,6 +57,8 @@ use UnitEnum;
 class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
+
+    protected static string $policy = VehiclePolicy::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
@@ -107,9 +112,8 @@ class VehicleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\BookingsRelationManager::class,
-            RelationManagers\ImagesRelationManager::class,
-            RelationManagers\ReviewsRelationManager::class,
+            BookingsRelationManager::class,
+            ReviewsRelationManager::class,
         ];
     }
 
@@ -126,6 +130,30 @@ class VehicleResource extends Resource
         ];
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        // Admin sees all vehicles
+        if ($user->role === UserRole::ADMIN) {
+            return $query;
+        }
+
+        // Owner sees only their own vehicles
+        if ($user->role === UserRole::OWNER) {
+            return $query->where('owner_id', $user->id);
+        }
+
+        // Renter sees only published and available vehicles
+        if ($user->role === UserRole::RENTER) {
+            return $query->where('status', VehicleStatus::PUBLISHED)
+                        ->where('is_available', true);
+        }
+
+        return $query;
+    }
+
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
@@ -136,6 +164,25 @@ class VehicleResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count() ?: null;
+        $user = auth()->user();
+
+        if (!$user) {
+            return null;
+        }
+
+        // Admin sees total count
+        if ($user->role === UserRole::ADMIN) {
+            return static::getModel()::count() ?: null;
+        }
+
+        // Owner sees only their vehicles count
+        if ($user->role === UserRole::OWNER) {
+            return static::getModel()::where('owner_id', $user->id)->count() ?: null;
+        }
+
+        // Renter sees published and available vehicles count
+        return static::getModel()::where('status', VehicleStatus::PUBLISHED)
+            ->where('is_available', true)
+            ->count() ?: null;
     }
 }

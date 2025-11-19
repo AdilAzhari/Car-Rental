@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\VehicleStatus;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -70,7 +71,7 @@ class VehicleRepository
             ->findOrFail($vehicleId);
 
         // Check if vehicle is available for booking
-        if (! $vehicle->is_available || $vehicle->status !== \App\Enums\VehicleStatus::PUBLISHED) {
+        if (! $vehicle->is_available || $vehicle->status !== VehicleStatus::PUBLISHED) {
             return false;
         }
 
@@ -166,7 +167,7 @@ class VehicleRepository
             ->withCount(['bookings', 'reviews'])
             ->withAvg('reviews', 'rating')
             ->where('is_available', true)
-            ->where('status', 'published')
+            ->where('status', VehicleStatus::PUBLISHED)
             ->orderByDesc('bookings_count')
             ->orderByDesc('reviews_avg_rating')
             ->take($limit)
@@ -178,7 +179,7 @@ class VehicleRepository
         return Vehicle::with(['owner', 'images'])
             ->withAvg('reviews', 'rating')
             ->where('is_available', true)
-            ->where('status', 'published')
+            ->where('status', VehicleStatus::PUBLISHED)
             ->where('is_featured', true)
             ->orderByDesc('created_at')
             ->take($limit)

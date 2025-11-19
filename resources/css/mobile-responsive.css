@@ -1,0 +1,281 @@
+/* Mobile Responsive Styles for Filament Dashboard */
+
+/* Responsive Grid System */
+@media (max-width: 640px) {
+    /* Mobile: Force single column for stats */
+    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+
+    /* Make sidebar full width when open on mobile */
+    .fi-sidebar {
+        width: 100% !important;
+    }
+
+    /* Adjust top bar for mobile */
+    .fi-topbar {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Make tables scrollable horizontally */
+    .fi-ta {
+        overflow-x: auto !important;
+    }
+
+    /* Adjust form layouts for mobile */
+    .fi-fo-field-wrp-label {
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Stack form actions vertically */
+    .fi-fo-actions {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .fi-fo-actions > * {
+        width: 100% !important;
+    }
+
+    /* Make modal full screen on mobile */
+    .fi-modal {
+        margin: 0 !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        border-radius: 0 !important;
+    }
+
+    /* Adjust widget cards */
+    .fi-wi {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Make action buttons full width */
+    .fi-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* Stack table header actions */
+    .fi-ta-header-actions {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    /* Reduce padding on mobile */
+    .fi-main {
+        padding: 1rem !important;
+    }
+
+    /* Make breadcrumbs wrap properly */
+    .fi-breadcrumbs {
+        flex-wrap: wrap !important;
+    }
+
+    /* Hide less important columns on mobile tables */
+    .fi-ta-cell:nth-child(n+4),
+    .fi-ta-header-cell:nth-child(n+4) {
+        display: none;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+    /* Tablet: 2 columns for stats */
+    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    /* Adjust padding for tablets */
+    .fi-main {
+        padding: 1.5rem !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Desktop: 3 columns for stats */
+    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    .fi-btn,
+    .fi-link,
+    .fi-ta-row {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+
+    /* Add more padding to clickable elements */
+    .fi-ta-cell {
+        padding: 1rem !important;
+    }
+
+    /* Make dropdowns easier to tap */
+    .fi-select,
+    .fi-input {
+        min-height: 44px !important;
+        font-size: 16px !important; /* Prevents iOS zoom */
+    }
+}
+
+/* Responsive Images */
+@media (max-width: 640px) {
+    .fi-fi-image,
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+    .fi-header-heading {
+        font-size: 1.5rem !important;
+    }
+
+    .fi-section-header-heading {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* Fix notification panel on mobile */
+@media (max-width: 640px) {
+    .fi-dropdown-panel {
+        max-width: calc(100vw - 2rem) !important;
+        right: 1rem !important;
+    }
+}
+
+/* Responsive widgets layout */
+@media (max-width: 640px) {
+    /* Force full width for widgets */
+    .fi-wi {
+        grid-column: span 1 / span 1 !important;
+    }
+
+    /* Chart widgets responsive height */
+    .fi-wi-chart {
+        min-height: 250px !important;
+    }
+}
+
+/* Responsive pagination */
+@media (max-width: 640px) {
+    .fi-ta-pagination {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
+    .fi-ta-pagination-records {
+        text-align: center !important;
+    }
+
+    /* Hide page number buttons on mobile, keep only prev/next */
+    .fi-pagination-items {
+        display: none !important;
+    }
+}
+
+/* Responsive filters */
+@media (max-width: 640px) {
+    .fi-ta-filters {
+        flex-direction: column !important;
+    }
+
+    .fi-ta-filter {
+        width: 100% !important;
+    }
+}
+
+/* Better spacing for mobile cards */
+@media (max-width: 640px) {
+    .fi-section-content {
+        padding: 1rem !important;
+    }
+
+    .fi-section-header {
+        padding: 1rem !important;
+    }
+}
+
+/* Responsive column layout for forms */
+@media (max-width: 640px) {
+    /* Force single column for all form grids */
+    .fi-fo-grid,
+    .grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Fix sidebar toggle on mobile */
+@media (max-width: 1024px) {
+    .fi-sidebar-open .fi-sidebar {
+        position: fixed !important;
+        z-index: 40 !important;
+    }
+
+    /* Add backdrop when sidebar is open */
+    .fi-sidebar-open::before {
+        content: '' !important;
+        position: fixed !important;
+        inset: 0 !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        z-index: 30 !important;
+    }
+}
+
+/* Responsive stat cards */
+@media (max-width: 640px) {
+    .fi-wi-stats-overview-stat {
+        padding: 1rem !important;
+    }
+
+    .fi-wi-stats-overview-stat-value {
+        font-size: 1.5rem !important;
+    }
+
+    .fi-wi-stats-overview-stat-description {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* Better scrolling on mobile */
+@media (max-width: 640px) {
+    body {
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .fi-ta-content {
+        -webkit-overflow-scrolling: touch !important;
+    }
+}
+
+/* Responsive action modals */
+@media (max-width: 640px) {
+    .fi-modal-content {
+        padding: 1.5rem !important;
+    }
+
+    .fi-modal-header {
+        padding: 1.5rem !important;
+    }
+
+    .fi-modal-footer {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        padding: 1.5rem !important;
+    }
+
+    .fi-modal-footer-actions {
+        flex-direction: column-reverse !important;
+        width: 100% !important;
+    }
+
+    .fi-modal-footer-actions > * {
+        width: 100% !important;
+    }
+}

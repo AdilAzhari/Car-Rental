@@ -568,4 +568,5 @@ return [
     'hide_selected' => 'إخفاء المحدد',
     'show_selected' => 'إظهار المحدد',
     'values_properties' => 'قيم الخصائص',
+    'reviewed_on' => 'تمت المراجعة في',
 ];
