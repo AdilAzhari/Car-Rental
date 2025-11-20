@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\SmsWebhookController;
 use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\TwilioWebhookController;
 use App\Http\Controllers\Api\UserFavoritesController;
@@ -12,6 +13,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->get('/user', fn (Request $request) => $request->user());
+
+// SMS Webhook routes (no auth required - called by SMS provider)
+Route::prefix('webhooks')->group(function (): void {
+    Route::post('/sms/receive', [SmsWebhookController::class, 'receive'])->name('webhooks.sms.receive');
+});
 
 // Public car routes - Higher rate limit for browsing
 Route::middleware(['throttle:60,1'])->group(function (): void {
@@ -34,6 +40,11 @@ Route::middleware(['auth:sanctum'])->group(function (): void {
         Route::get('/favorites/{vehicleId}', [UserFavoritesController::class, 'show']);
         Route::get('/payments/status/{bookingId}', [PaymentController::class, 'getPaymentStatus']);
         Route::get('/bookings/{id}', [BookingController::class, 'show']);
+
+        // SMS message routes
+        Route::get('/vehicles/{vehicleId}/sms', [SmsWebhookController::class, 'getVehicleSms']);
+        Route::get('/sms/plate/{plateNumber}', [SmsWebhookController::class, 'getByPlateNumber']);
+        Route::get('/sms/jpj-responses', [SmsWebhookController::class, 'getJpjResponses']);
     });
 
     // Medium-frequency operations (CRUD operations) - Moderate limits
