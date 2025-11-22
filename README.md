@@ -1,59 +1,388 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Car Rental Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive car rental management system built with Laravel 12 and Filament v4, featuring multi-role access, booking management, payment processing, and vehicle tracking.
 
-## About Laravel
+## 📋 Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [System Requirements](#system-requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Architecture](#architecture)
+- [User Roles](#user-roles)
+- [Documentation](#documentation)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [License](#license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Core Features
+- **Multi-Role System**: Admin, Owner (Vehicle Provider), and Renter roles
+- **Vehicle Management**: Complete CRUD operations with image galleries
+- **Booking System**: Real-time availability checking with conflict prevention
+- **Payment Processing**: Multiple payment methods with transaction tracking
+- **Review System**: Customer ratings and feedback for vehicles
+- **Activity Logging**: Comprehensive audit trail using Spatie Activity Log
+- **Search & Favorites**: User preferences and recent searches
+- **Notifications**: Real-time notifications for booking status changes
 
-## Learning Laravel
+### Admin Panel Features (Filament v4)
+- **Dashboard**: Revenue analytics, booking statistics, vehicle utilization
+- **Resource Management**: Users, Vehicles, Bookings, Payments, Reviews
+- **Relation Managers**: Embedded management of related records
+- **Export Functionality**: Export data to Excel, CSV, and PDF
+- **Advanced Filters**: Multi-field filtering and search
+- **Bulk Actions**: Perform actions on multiple records
+- **Custom Pages**: Profile management, login customization
+- **Table Summarizers**: Real-time statistics (sum, average, count)
+- **Activity Logs**: System-wide activity tracking
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### API Features
+- **RESTful API**: Complete REST API for mobile/web integration
+- **Authentication**: Sanctum-based token authentication
+- **Resource Endpoints**: Full CRUD for all entities
+- **Search & Filter**: Advanced query parameters
+- **Pagination**: Efficient data loading
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠 Technology Stack
 
-## Laravel Sponsors
+### Backend
+- **Framework**: Laravel 12.37.0
+- **PHP**: 8.4.1
+- **Database**: MySQL 8.0+
+- **Admin Panel**: Filament v4
+- **Authentication**: Laravel Sanctum
+- **Activity Log**: Spatie Laravel Activity Log
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Frontend
+- **Admin UI**: Filament v4 (TALL Stack)
+- **JavaScript**: Inertia.js for SPA capabilities
+- **Styling**: Tailwind CSS via Filament
+- **Icons**: Heroicons
 
-### Premium Partners
+### Additional Packages
+- **Export**: alperenersoy/filament-export
+- **Calendar**: guava/calendar
+- **Testing**: Pest PHP
+- **Code Quality**: Laravel Pint, Rector
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 💻 System Requirements
 
-## Contributing
+- PHP 8.2 or higher
+- Composer 2.x
+- MySQL 8.0+ or MariaDB 10.3+
+- Node.js 18.x or higher (for asset compilation)
+- NPM or Yarn
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### PHP Extensions
+- BCMath
+- Ctype
+- Fileinfo
+- JSON
+- Mbstring
+- OpenSSL
+- PDO
+- Tokenizer
+- XML
+- GD or Imagick (for image processing)
 
-## Code of Conduct
+## 📦 Installation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd car-rental
+```
 
-## Security Vulnerabilities
+### 2. Install Dependencies
+```bash
+composer install
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Environment Configuration
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+### 4. Database Setup
+```bash
+# Create database
+mysql -u root -p -e "CREATE DATABASE car_rental CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Configure .env file
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=car_rental
+DB_USERNAME=root
+DB_PASSWORD=your_password
+
+# Run migrations
+php artisan migrate --seed
+```
+
+### 5. Storage Setup
+```bash
+php artisan storage:link
+```
+
+### 6. Build Assets
+```bash
+npm run build
+```
+
+### 7. Start Development Server
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000/admin` to access the admin panel.
+
+### Default Credentials
+After seeding, you can login with:
+- **Admin**: admin@example.com / password
+- **Owner**: owner@example.com / password
+- **Renter**: renter@example.com / password
+
+## ⚙️ Configuration
+
+### Application Settings
+Edit `.env` file for basic configuration:
+
+```env
+APP_NAME="Car Rental System"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost
+APP_LOCALE=en
+APP_CURRENCY=MYR
+```
+
+### Mail Configuration
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_FROM_ADDRESS="noreply@carental.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### Queue Configuration
+For production, use Redis or Database queue driver:
+```env
+QUEUE_CONNECTION=redis
+```
+
+Then run the queue worker:
+```bash
+php artisan queue:work
+```
+
+### File Storage
+For production, configure S3 or other cloud storage:
+```env
+FILESYSTEM_DISK=s3
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=your_bucket
+```
+
+## 🏗 Architecture
+
+### Design Patterns
+- **Repository Pattern**: Data access abstraction
+- **Service Layer**: Business logic separation
+- **DTO Pattern**: Data transfer objects for API responses
+- **Observer Pattern**: Model event handling
+- **Policy Pattern**: Authorization logic
+
+### Project Structure
+```
+car-rental/
+├── app/
+│   ├── Actions/          # Single-purpose action classes
+│   ├── Commands/         # Artisan console commands
+│   ├── DTOs/            # Data Transfer Objects
+│   ├── Enums/           # Enumeration classes
+│   ├── Events/          # Event classes
+│   ├── Exceptions/      # Custom exceptions
+│   ├── Filament/        # Filament admin panel
+│   │   ├── Pages/       # Custom pages
+│   │   ├── Resources/   # CRUD resources
+│   │   └── Widgets/     # Dashboard widgets
+│   ├── Helpers/         # Helper functions
+│   ├── Http/            # Controllers, Middleware, Requests
+│   │   ├── Controllers/
+│   │   │   ├── Api/     # API controllers
+│   │   │   ├── Auth/    # Authentication controllers
+│   │   │   └── Web/     # Web controllers
+│   │   ├── Middleware/
+│   │   ├── Requests/    # Form requests
+│   │   └── Resources/   # API resources
+│   ├── Listeners/       # Event listeners
+│   ├── Models/          # Eloquent models
+│   ├── Notifications/   # Notification classes
+│   ├── Observers/       # Model observers
+│   ├── Policies/        # Authorization policies
+│   ├── Repositories/    # Data repositories
+│   └── Services/        # Business logic services
+├── database/
+│   ├── factories/       # Model factories
+│   ├── migrations/      # Database migrations
+│   └── seeders/         # Database seeders
+├── docs/                # Documentation
+├── public/              # Public assets
+├── resources/
+│   ├── lang/           # Translations (en, ar)
+│   ├── views/          # Blade templates
+│   └── js/             # JavaScript files
+├── routes/
+│   ├── api.php         # API routes
+│   ├── web.php         # Web routes
+│   └── console.php     # Console routes
+└── tests/              # Tests
+```
+
+## 👥 User Roles
+
+### Admin
+- Full system access
+- User management
+- Vehicle management
+- Booking management
+- Payment management
+- System configuration
+- Activity log viewing
+- Analytics and reporting
+
+### Owner (Vehicle Provider)
+- Manage own vehicles
+- View bookings for own vehicles
+- View vehicle reviews
+- Upload vehicle images
+- Track vehicle revenue
+- View activity logs for own vehicles
+
+### Renter (Customer)
+- Browse available vehicles
+- Create bookings
+- Make payments
+- Leave reviews
+- View booking history
+- Manage favorites
+- Track recent searches
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs` directory:
+
+- [Architecture](./ARCHITECTURE.md) - System architecture and design patterns
+- [Models](./MODELS.md) - Database models and relationships
+- [API Documentation](./API.md) - REST API endpoints and usage
+- [Enums & DTOs](./ENUMS_DTOS.md) - Enumeration and data transfer objects
+- [Services](./SERVICES.md) - Business logic services
+- [Deployment](./DEPLOYMENT.md) - Production deployment guide
+- [Testing](./TESTING.md) - Testing guide
+
+## 🧪 Testing
+
+### Running Tests
+```bash
+# Run all tests
+php artisan test
+
+# Run specific test suite
+php artisan test --testsuite=Feature
+php artisan test --testsuite=Unit
+
+# Run with coverage
+php artisan test --coverage
+```
+
+### Test Structure
+- **Feature Tests**: Test complete features and workflows
+- **Unit Tests**: Test individual classes and methods
+
+## 🚀 Deployment
+
+### Production Checklist
+- [ ] Set `APP_ENV=production`
+- [ ] Set `APP_DEBUG=false`
+- [ ] Generate application key
+- [ ] Configure database
+- [ ] Set up queue worker
+- [ ] Configure file storage (S3)
+- [ ] Set up mail service
+- [ ] Configure caching (Redis)
+- [ ] Set up SSL certificate
+- [ ] Configure backup system
+- [ ] Set up monitoring
+
+### Deployment Commands
+```bash
+# Optimize application
+php artisan optimize
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Run migrations
+php artisan migrate --force
+
+# Clear caches
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+
+## 🔒 Security
+
+- **Authentication**: Laravel Sanctum for API, Session for web
+- **Authorization**: Policy-based access control
+- **CSRF Protection**: Enabled for all forms
+- **SQL Injection**: Protected via Eloquent ORM
+- **XSS Protection**: Blade template escaping
+- **Password Hashing**: Bcrypt with configurable rounds
+- **Rate Limiting**: API and login rate limiting
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📧 Support
+
+For support and questions:
+- Email: support@carental.com
+- Documentation: https://docs.carental.com
+- Issues: GitHub Issues
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Filament Admin Panel
+- Spatie Packages
+- All contributors
+
+---
+
+**Version**: 1.0.0
+**Last Updated**: 2025-11-11
+**Maintained by**: Development Team

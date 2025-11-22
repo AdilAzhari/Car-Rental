@@ -22,3 +22,17 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Production files
+.env.production
+!.env.production.example
+deploy.log
+deployment_*.log
+backups/
+*.sql
+*.sql.gz
+
+# IDE and OS files
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php

@@ -4,72 +4,42 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Twilio\Exceptions\TwilioException;
-use Twilio\Rest\Client;
 
 class SmsService
 {
-    private readonly Client $client;
+    private readonly MacrokioskSmsService $macrokioskService;
 
     private readonly string $fromNumber;
 
     /**
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(MacrokioskSmsService $macrokioskService)
     {
-        $accountSid = config('services.twilio.account_sid');
-        $authToken = config('services.twilio.auth_token');
-        $fromNumber = config('services.twilio.from_number');
-
-        if (! $accountSid || ! $authToken || ! $fromNumber) {
-            throw new Exception('Twilio credentials (account_sid, auth_token, from_number) not configured');
-        }
-
-        $this->fromNumber = $fromNumber;
-        $this->client = new Client($accountSid, $authToken);
+        $this->macrokioskService = $macrokioskService;
+        $this->fromNumber = config('sms.default_sender', 'CarRental');
     }
 
     public function sendSms(string $toNumber, string $message): array
     {
         try {
-            $twilioMessage = $this->client->messages->create(
-                $toNumber,
-                [
-                    'from' => $this->fromNumber,
-                    'body' => $message,
-                ]
-            );
+            $result = $this->macrokioskService->sendSms($toNumber, $message, $this->fromNumber);
 
-            Log::info('SMS sent successfully via Twilio', [
+            Log::info('SMS sent successfully via Macrokiosk', [
                 'to' => $toNumber,
-                'sid' => $twilioMessage->sid,
-                'status' => $twilioMessage->status,
+                'message_id' => $result['data']['msgid'] ?? null,
             ]);
 
             return [
-                'success' => true,
-                'message' => 'SMS sent successfully',
+                'success' => $result['success'],
+                'message' => $result['message'],
                 'response' => [
-                    'sid' => $twilioMessage->sid,
-                    'status' => $twilioMessage->status,
-                    'to' => $twilioMessage->to,
-                    'from' => $twilioMessage->from,
-                    'date_sent' => $twilioMessage->dateSent?->format('Y-m-d H:i:s'),
+                    'sid' => $result['data']['msgid'] ?? null,
+                    'status' => $result['success'] ? 'sent' : 'failed',
+                    'to' => $toNumber,
+                    'from' => $this->fromNumber,
+                    'date_sent' => now()->format('Y-m-d H:i:s'),
                 ],
-            ];
-
-        } catch (TwilioException $e) {
-            Log::error('Twilio SMS Error', [
-                'error' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'to' => $toNumber,
-            ]);
-
-            return [
-                'success' => false,
-                'message' => 'Twilio error: '.$e->getMessage(),
-                'response' => null,
             ];
 
         } catch (Exception $e) {
@@ -117,21 +87,23 @@ class SmsService
     public function getMessageStatus(string $messageSid): array
     {
         try {
-            $message = $this->client->messages($messageSid)->fetch();
+            // Macrokiosk doesn't provide message status API in the same way as Twilio
+            // You would need to check via webhook responses or delivery reports
+            Log::info('Message status check requested', ['message_id' => $messageSid]);
 
             return [
                 'success' => true,
-                'status' => $message->status,
-                'error_code' => $message->errorCode,
-                'error_message' => $message->errorMessage,
-                'date_sent' => $message->dateSent?->format('Y-m-d H:i:s'),
-                'date_updated' => $message->dateUpdated?->format('Y-m-d H:i:s'),
+                'status' => 'unknown',
+                'error_code' => null,
+                'error_message' => 'Status tracking not implemented for Macrokiosk',
+                'date_sent' => null,
+                'date_updated' => null,
             ];
 
-        } catch (TwilioException $e) {
-            Log::error('Twilio Status Check Error', [
+        } catch (Exception $e) {
+            Log::error('Status Check Error', [
                 'error' => $e->getMessage(),
-                'sid' => $messageSid,
+                'message_id' => $messageSid,
             ]);
 
             return [
@@ -143,24 +115,35 @@ class SmsService
 
     public function validatePhoneNumber(string $phoneNumber): array
     {
-        try {
-            // Use Twilio Lookup API to validate phone number
-            $phone = $this->client->lookups->v1->phoneNumbers($phoneNumber)->fetch();
+        // Basic Malaysian phone number validation
+        $cleaned = preg_replace('/[^0-9+]/', '', $phoneNumber);
+
+        // Malaysian numbers typically start with +60 or 60 or 0
+        $isValid = preg_match('/^(\+?60|0)[1-9]\d{7,9}$/', $cleaned);
+
+        if ($isValid) {
+            // Normalize to international format
+            $normalized = $cleaned;
+            if (str_starts_with($cleaned, '0')) {
+                $normalized = '60' . substr($cleaned, 1);
+            }
+            if (str_starts_with($normalized, '+60')) {
+                $normalized = substr($normalized, 1);
+            }
 
             return [
                 'success' => true,
                 'valid' => true,
-                'phone_number' => $phone->phoneNumber,
-                'country_code' => $phone->countryCode,
-                'national_format' => $phone->nationalFormat,
-            ];
-
-        } catch (TwilioException $e) {
-            return [
-                'success' => false,
-                'valid' => false,
-                'message' => $e->getMessage(),
+                'phone_number' => '+' . $normalized,
+                'country_code' => 'MY',
+                'national_format' => $phoneNumber,
             ];
         }
+
+        return [
+            'success' => false,
+            'valid' => false,
+            'message' => 'Invalid Malaysian phone number format',
+        ];
     }
 }
