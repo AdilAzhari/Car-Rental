@@ -284,9 +284,9 @@ car-rental/
 Comprehensive documentation is available in the `/docs` directory:
 
 - [Architecture](./ARCHITECTURE.md) - System architecture and design patterns
-- [Models](./MODELS.md) - Database models and relationships
+- [Models](docs/MODELS.md) - Database models and relationships
 - [API Documentation](./API.md) - REST API endpoints and usage
-- [Enums & DTOs](./ENUMS_DTOS.md) - Enumeration and data transfer objects
+- [Enums & DTOs](docs/ENUMS_DTOS.md) - Enumeration and data transfer objects
 - [Services](./SERVICES.md) - Business logic services
 - [Deployment](./DEPLOYMENT.md) - Production deployment guide
 - [Testing](./TESTING.md) - Testing guide
