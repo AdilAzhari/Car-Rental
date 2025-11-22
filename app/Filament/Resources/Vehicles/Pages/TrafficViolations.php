@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\VehicleResource\Pages;
+namespace App\Filament\Resources\Vehicles\Pages;
 
 use App\Filament\Resources\VehicleResource;
 use App\Filament\Resources\Vehicles\VehicleResource as VehiclesVehicleResource;

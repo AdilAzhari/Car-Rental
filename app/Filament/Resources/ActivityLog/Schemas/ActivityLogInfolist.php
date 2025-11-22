@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ActivityLogResource\Schemas;
+namespace App\Filament\Resources\ActivityLog\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\VehicleResource\Schemas;
+namespace App\Filament\Resources\Vehicles\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;

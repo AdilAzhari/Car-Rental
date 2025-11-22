@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ReviewResource\Schemas;
+namespace App\Filament\Resources\Reviews\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;

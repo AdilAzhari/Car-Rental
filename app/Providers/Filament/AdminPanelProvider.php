@@ -56,7 +56,6 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->unsavedChangesAlerts()
             ->databaseTransactions()
-            ->databaseNotifications()
             ->renderHook(
                 'panels::body.start',
                 fn (): string => view('filament.hooks.rtl-support')->render()
