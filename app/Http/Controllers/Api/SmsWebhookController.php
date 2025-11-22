@@ -327,4 +327,114 @@ class SmsWebhookController extends Controller
             'total_count' => $messages->count(),
         ]);
     }
+
+    /**
+     * Handle delivery notification (DN) webhook from MACROKIOSK
+     *
+     * URL: POST /api/webhooks/sms/delivery
+     *
+     * Expected payload from MACROKIOSK:
+     * {
+     *   "msgID": "unique-message-id",
+     *   "msisdn": "60123456789",
+     *   "status": "DELIVRD",
+     *   "statusDetail": "Message delivered to handset"
+     * }
+     */
+    public function delivery(Request $request): JsonResponse
+    {
+        try {
+            // Extract DN data (flexible field names)
+            $messageId = $request->input('msgID')
+                      ?? $request->input('message_id')
+                      ?? $request->input('sid');
+
+            $msisdn = $request->input('msisdn')
+                   ?? $request->input('phone')
+                   ?? $request->input('to');
+
+            $status = $request->input('status')
+                   ?? $request->input('delivery_status');
+
+            $statusDetail = $request->input('statusDetail')
+                         ?? $request->input('status_detail')
+                         ?? $request->input('description');
+
+            Log::info('SMS delivery notification received', [
+                'message_id' => $messageId,
+                'msisdn' => $msisdn,
+                'status' => $status,
+                'status_detail' => $statusDetail,
+            ]);
+
+            // Find the SMS message by message_sid
+            $smsMessage = SmsMessage::where('message_sid', $messageId)->first();
+
+            if (!$smsMessage) {
+                Log::warning('SMS message not found for DN', [
+                    'message_id' => $messageId,
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'SMS message not found',
+                ], 404);
+            }
+
+            // Update SMS status based on delivery status
+            $newStatus = $this->mapDeliveryStatus($status);
+
+            $smsMessage->update([
+                'status' => $newStatus,
+                'parsed_data' => array_merge($smsMessage->parsed_data ?? [], [
+                    'delivery_status' => $status,
+                    'delivery_status_detail' => $statusDetail,
+                    'delivery_updated_at' => now()->toDateTimeString(),
+                ]),
+                'processed_at' => now(),
+            ]);
+
+            Log::info('SMS delivery status updated', [
+                'message_id' => $messageId,
+                'old_status' => $smsMessage->status,
+                'new_status' => $newStatus,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Delivery notification processed',
+                'sms_id' => $smsMessage->id,
+            ], 200);
+
+        } catch (\Exception $e) {
+            Log::error('Delivery notification processing failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'payload' => $request->all(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process delivery notification',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Map MACROKIOSK delivery status to internal status
+     */
+    private function mapDeliveryStatus(string $status): string
+    {
+        return match (strtoupper($status)) {
+            'DELIVRD' => 'delivered',
+            'EXPIRED' => 'failed',
+            'DELETED' => 'failed',
+            'UNDELIV' => 'failed',
+            'ACCEPTD' => 'sent',
+            'UNKNOWN' => 'pending',
+            'REJECTD' => 'failed',
+            default => 'pending',
+        };
+    }
 }

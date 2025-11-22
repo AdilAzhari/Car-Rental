@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum'])->get('/user', fn (Request $request) => $requ
 // SMS Webhook routes (no auth required - called by SMS provider)
 Route::prefix('webhooks')->group(function (): void {
     Route::post('/sms/receive', [SmsWebhookController::class, 'receive'])->name('webhooks.sms.receive');
+    Route::post('/sms/delivery', [SmsWebhookController::class, 'delivery'])->name('webhooks.sms.delivery');
 });
 
 // Public car routes - Higher rate limit for browsing

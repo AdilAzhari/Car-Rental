@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('direction', ['inbound', 'outbound'])->default('inbound');
             $table->text('message_body'); // SMS content
             $table->string('message_type')->default('jpj_response'); // Type: jpj_response, notification, etc.
-            $table->enum('status', ['received', 'processed', 'failed'])->default('received');
+            $table->enum('status', ['received', 'processed', 'failed', 'sent', 'delivered', 'pending'])->default('received');
             $table->json('parsed_data')->nullable(); // Structured data parsed from SMS
             $table->timestamp('received_at')->nullable();
             $table->timestamp('processed_at')->nullable();
