@@ -11,6 +11,9 @@ use App\Models\VehicleImage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @property $faker
+ */
 class CarRentalSeeder extends Seeder
 {
     /**
@@ -46,12 +49,12 @@ class CarRentalSeeder extends Seeder
             'password' => Hash::make('password'),
             'phone' => '+1-555-LONG-NAME',
             'role' => 'owner',
-            'license_number' => fake()->bothify('???-####-####'),
-            'id_document_path' => 'documents/ids/'.fake()->uuid().'.pdf',
-            'license_document_path' => 'documents/licenses/'.fake()->uuid().'.pdf',
+            'license_number' => $this->faker->bothify('???-####-####'),
+            'id_document_path' => 'documents/ids/'.$this->faker->uuid().'.pdf',
+            'license_document_path' => 'documents/licenses/'.$this->faker->uuid().'.pdf',
             'is_verified' => true,
-            'date_of_birth' => fake()->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
-            'address' => fake()->address(),
+            'date_of_birth' => $this->faker->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
+            'address' => $this->faker->address(),
         ]);
 
         // User with special characters in name
@@ -60,40 +63,40 @@ class CarRentalSeeder extends Seeder
             'password' => Hash::make('password'),
             'phone' => '+34-666-123-456',
             'role' => 'renter',
-            'license_number' => fake()->bothify('???-####-####'),
-            'id_document_path' => 'documents/ids/'.fake()->uuid().'.pdf',
-            'license_document_path' => 'documents/licenses/'.fake()->uuid().'.pdf',
+            'license_number' => $this->faker->bothify('???-####-####'),
+            'id_document_path' => 'documents/ids/'.$this->faker->uuid().'.pdf',
+            'license_document_path' => 'documents/licenses/'.$this->faker->uuid().'.pdf',
             'is_verified' => true,
-            'date_of_birth' => fake()->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
-            'address' => fake()->address(),
+            'date_of_birth' => $this->faker->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
+            'address' => $this->faker->address(),
         ]);
 
         // User with minimum age (18)
         User::query()->firstOrCreate(['email' => 'young@example.com'], [
             'name' => 'Young Renter',
             'password' => Hash::make('password'),
-            'phone' => fake()->phoneNumber(),
+            'phone' => $this->faker->phoneNumber(),
             'role' => 'renter',
-            'license_number' => fake()->bothify('???-####-####'),
-            'id_document_path' => 'documents/ids/'.fake()->uuid().'.pdf',
-            'license_document_path' => 'documents/licenses/'.fake()->uuid().'.pdf',
+            'license_number' => $this->faker->bothify('???-####-####'),
+            'id_document_path' => 'documents/ids/'.$this->faker->uuid().'.pdf',
+            'license_document_path' => 'documents/licenses/'.$this->faker->uuid().'.pdf',
             'is_verified' => true,
             'date_of_birth' => now()->subYears(18)->format('Y-m-d'),
-            'address' => fake()->address(),
+            'address' => $this->faker->address(),
         ]);
 
         // User with maximum age (90)
         User::query()->firstOrCreate(['email' => 'senior@example.com'], [
             'name' => 'Senior Owner',
             'password' => Hash::make('password'),
-            'phone' => fake()->phoneNumber(),
+            'phone' => $this->faker->phoneNumber(),
             'role' => 'owner',
-            'license_number' => fake()->bothify('???-####-####'),
-            'id_document_path' => 'documents/ids/'.fake()->uuid().'.pdf',
-            'license_document_path' => 'documents/licenses/'.fake()->uuid().'.pdf',
+            'license_number' => $this->faker->bothify('???-####-####'),
+            'id_document_path' => 'documents/ids/'.$this->faker->uuid().'.pdf',
+            'license_document_path' => 'documents/licenses/'.$this->faker->uuid().'.pdf',
             'is_verified' => true,
             'date_of_birth' => now()->subYears(90)->format('Y-m-d'),
-            'address' => fake()->address(),
+            'address' => $this->faker->address(),
         ]);
 
         // Create some additional edge case users only if they don't exist
@@ -101,15 +104,15 @@ class CarRentalSeeder extends Seeder
             User::query()->firstOrCreate(['email' => "suspended.user{$i}@example.com"], [
                 'name' => "Suspended User {$i}",
                 'password' => Hash::make('password'),
-                'phone' => fake()->phoneNumber(),
+                'phone' => $this->faker->phoneNumber(),
                 'role' => 'renter',
-                'license_number' => fake()->bothify('???-####-####'),
-                'id_document_path' => 'documents/ids/'.fake()->uuid().'.pdf',
-                'license_document_path' => 'documents/licenses/'.fake()->uuid().'.pdf',
+                'license_number' => $this->faker->bothify('???-####-####'),
+                'id_document_path' => 'documents/ids/'.$this->faker->uuid().'.pdf',
+                'license_document_path' => 'documents/licenses/'.$this->faker->uuid().'.pdf',
                 'is_verified' => false,
                 'email_verified_at' => null,
-                'date_of_birth' => fake()->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
-                'address' => fake()->address(),
+                'date_of_birth' => $this->faker->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
+                'address' => $this->faker->address(),
             ]);
         }
     }
@@ -294,7 +297,7 @@ class CarRentalSeeder extends Seeder
                 'amount' => $booking->total_amount,
                 'payment_status' => 'confirmed',
                 'payment_method' => 'visa',
-                'transaction_id' => 'TXN-RETRY-'.fake()->bothify('#?#?#?#?'),
+                'transaction_id' => 'TXN-RETRY-'.$this->faker->bothify('#?#?#?#?'),
                 'processed_at' => now()->subHour(),
             ]);
         }
@@ -307,7 +310,7 @@ class CarRentalSeeder extends Seeder
                 'amount' => $expensiveBooking->total_amount * 0.5,
                 'payment_status' => 'confirmed',
                 'payment_method' => 'bank_transfer',
-                'transaction_id' => 'TXN-PARTIAL-'.fake()->bothify('#?#?#?'),
+                'transaction_id' => 'TXN-PARTIAL-'.$this->faker->bothify('#?#?#?'),
             ]);
         }
     }
@@ -327,7 +330,7 @@ class CarRentalSeeder extends Seeder
                 'user_id' => $admin?->id,
                 'vehicle_id' => $randomVehiclesForSystemLogs->random()->id,
                 'action' => 'system_maintenance',
-                'description' => 'System maintenance performed: '.fake()->randomElement([
+                'description' => 'System maintenance performed: '.$this->faker->randomElement([
                     'Database optimization',
                     'Cache clearing',
                     'Security updates',
@@ -350,15 +353,15 @@ class CarRentalSeeder extends Seeder
             Log::factory()->create([
                 'vehicle_id' => $randomVehiclesForSystemLogs->random()->id,
                 'action' => 'security_incident',
-                'description' => fake()->randomElement([
+                'description' => $this->faker->randomElement([
                     'Multiple failed login attempts detected',
                     'Suspicious booking pattern flagged',
                     'Potential fraud attempt blocked',
                 ]),
                 'metadata' => [
-                    'ip_address' => fake()->ipv4(),
-                    'severity' => fake()->randomElement(['low', 'medium', 'high']),
-                    'source' => fake()->randomElement(['web', 'api', 'mobile']),
+                    'ip_address' => $this->faker->ipv4(),
+                    'severity' => $this->faker->randomElement(['low', 'medium', 'high']),
+                    'source' => $this->faker->randomElement(['web', 'api', 'mobile']),
                 ],
             ]);
         }
@@ -371,10 +374,10 @@ class CarRentalSeeder extends Seeder
                 Log::factory()->create([
                     'user_id' => $activeUser->id,
                     'vehicle_id' => $randomVehicles->random()->id, // Always provide a vehicle_id
-                    'action' => fake()->randomElement(['profile_view', 'search_performed', 'filter_applied']),
+                    'action' => $this->faker->randomElement(['profile_view', 'search_performed', 'filter_applied']),
                     'description' => 'High-frequency user activity',
                     'metadata' => [
-                        'ip_address' => fake()->ipv4(),
+                        'ip_address' => $this->faker->ipv4(),
                         'session_duration' => random_int(30, 300),
                         'page_views' => random_int(1, 10),
                     ],

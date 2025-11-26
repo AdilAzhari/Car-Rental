@@ -85,8 +85,8 @@ class VehicleSeeder extends Seeder
 
             $vehicle = Vehicle::query()->firstOrCreate(['plate_number' => $testVehicle['plate_number']], array_merge($cleanVehicleData, [
                 'owner_id' => $owner->id,
-                'last_oil_change' => $testVehicle['fuel_type'] !== 'electric' ? fake()->dateTimeBetween('-6 months', '-1 month') : null,
-                'policy' => fake()->paragraph(2),
+                'last_oil_change' => $testVehicle['fuel_type'] !== 'electric' ? $this->faker->dateTimeBetween('-6 months', '-1 month') : null,
+                'policy' => $this->faker->paragraph(2),
             ]));
 
             // Add images for each vehicle

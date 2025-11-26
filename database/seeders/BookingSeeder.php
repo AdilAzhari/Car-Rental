@@ -13,6 +13,8 @@ use Illuminate\Database\Seeder;
 
 class BookingSeeder extends Seeder
 {
+    private $faker;
+
     public function run(): void
     {
         $renters = User::query()->where('role', 'renter')->where('is_verified', true)->get();
@@ -101,9 +103,9 @@ class BookingSeeder extends Seeder
                 'renter_id' => $renter->id,
                 'vehicle_id' => $vehicle->id,
                 'total_amount' => $totalAmount,
-                'pickup_location' => fake()->address(),
-                'dropoff_location' => fake()->address(),
-                'special_requests' => $cleanBookingData['special_requests'] ?? fake()->optional(0.3)->paragraph(2),
+                'pickup_location' => $this->faker->address(),
+                'dropoff_location' => $this->faker->address(),
+                'special_requests' => $cleanBookingData['special_requests'] ?? $this->faker->optional(0.3)->paragraph(2),
                 'deposit_amount' => $depositAmount,
                 'commission_amount' => $commissionAmount,
             ]));
@@ -114,9 +116,9 @@ class BookingSeeder extends Seeder
                     'booking_id' => $booking->id,
                 ], [
                     'amount' => $booking->total_amount,
-                    'payment_method' => fake()->randomElement(['visa', 'credit', 'cash', 'bank_transfer']),
+                    'payment_method' => $this->faker->randomElement(['visa', 'credit', 'cash', 'bank_transfer']),
                     'payment_status' => in_array($booking->status, ['confirmed', 'ongoing', 'completed']) ? 'confirmed' : 'pending',
-                    'transaction_id' => 'TXN-'.fake()->bothify('#?#?#?#?#?#?'),
+                    'transaction_id' => 'TXN-'.$this->faker->bothify('#?#?#?#?#?#?'),
                     'processed_at' => $booking->status === 'pending' ? null : now(),
                 ]);
             }
@@ -128,8 +130,8 @@ class BookingSeeder extends Seeder
                 ], [
                     'vehicle_id' => $booking->vehicle_id,
                     'renter_id' => $booking->renter_id,
-                    'rating' => $testBooking['review_rating'] ?? fake()->numberBetween(3, 5),
-                    'comment' => fake()->paragraph(2),
+                    'rating' => $testBooking['review_rating'] ?? $this->faker->numberBetween(3, 5),
+                    'comment' => $this->faker->paragraph(2),
                 ]);
             }
 
@@ -140,7 +142,7 @@ class BookingSeeder extends Seeder
                 'action' => 'booking_created',
                 'description' => "Booking created for $vehicle->make $vehicle->model",
                 'metadata' => [
-                    'ip_address' => fake()->ipv4(),
+                    'ip_address' => $this->faker->ipv4(),
                     'booking_id' => $booking->id,
                 ],
             ]);
@@ -152,7 +154,7 @@ class BookingSeeder extends Seeder
                     'action' => 'booking_confirmed',
                     'description' => "Booking confirmed for $vehicle->make $vehicle->model",
                     'metadata' => [
-                        'ip_address' => fake()->ipv4(),
+                        'ip_address' => $this->faker->ipv4(),
                         'booking_id' => $booking->id,
                     ],
                 ]);
@@ -167,8 +169,8 @@ class BookingSeeder extends Seeder
             $renter = $renters->random();
 
             // Avoid duplicate bookings for same vehicle and dates
-            $startDate = fake()->dateTimeBetween('-2 months', '+2 months');
-            $endDate = Carbon::parse($startDate)->addDays(fake()->numberBetween(1, 10));
+            $startDate = $this->faker->dateTimeBetween('-2 months', '+2 months');
+            $endDate = Carbon::parse($startDate)->addDays($this->faker->numberBetween(1, 10));
 
             $existingBooking = Booking::query()->where('vehicle_id', $vehicle->id)
                 ->where(function ($query) use ($startDate, $endDate): void {
@@ -193,16 +195,16 @@ class BookingSeeder extends Seeder
             ]);
 
             // Create payment for most bookings
-            if (fake()->boolean(85)) {
+            if ($this->faker->boolean(85)) {
                 Payment::factory()->create([
                     'booking_id' => $booking->id,
                     'amount' => $booking->total_amount,
-                    'payment_status' => in_array($booking->status, ['confirmed', 'ongoing', 'completed']) ? 'confirmed' : fake()->randomElement(['pending', 'failed']),
+                    'payment_status' => in_array($booking->status, ['confirmed', 'ongoing', 'completed']) ? 'confirmed' : $this->faker->randomElement(['pending', 'failed']),
                 ]);
             }
 
             // Create reviews for completed bookings
-            if ($booking->status === 'completed' && fake()->boolean(70)) {
+            if ($booking->status === 'completed' && $this->faker->boolean(70)) {
                 Review::factory()->create([
                     'booking_id' => $booking->id,
                     'vehicle_id' => $booking->vehicle_id,
