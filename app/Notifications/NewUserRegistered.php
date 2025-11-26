@@ -21,13 +21,15 @@ class NewUserRegistered extends Notification
 
     public function toDatabase($notifiable): array
     {
+        $roleName = $this->user->role?->value ?? 'Unknown';
+
         return [
             'title' => 'New User Registered',
-            'body' => "{$this->user->name} ({$this->user->email}) has registered as a {$this->user->role->value}",
+            'body' => "{$this->user->name} ({$this->user->email}) has registered as a {$roleName}",
             'icon' => 'heroicon-o-user-plus',
             'icon_color' => 'success',
             'user_id' => $this->user->id,
-            'user_role' => $this->user->role->value,
+            'user_role' => $roleName,
             'actions' => [
                 [
                     'label' => 'View User',

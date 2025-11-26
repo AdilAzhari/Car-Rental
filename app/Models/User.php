@@ -60,6 +60,12 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    protected $attributes = [
+        'role' => 'admin',
+        'status' => 'active',
+        'is_verified' => true,
+    ];
+
     public function vehicles(): HasMany
     {
         return $this->hasMany(Vehicle::class, 'owner_id');
