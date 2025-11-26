@@ -388,8 +388,11 @@ class VehicleForm
                         FileUpload::make('documents')
                             ->label(__('resources.documents'))
                             ->multiple()
-                            ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf'])
                             ->directory('vehicles/documents')
+                            ->downloadable()
+                            ->openable()
+                            ->previewable()
                             ->maxFiles(5)
                             ->helperText(__('resources.documents_helper')),
                     ])

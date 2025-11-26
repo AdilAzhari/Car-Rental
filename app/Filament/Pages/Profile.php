@@ -208,7 +208,7 @@ class Profile extends Page implements HasForms
                                     ->helperText(__('resources.id_document_helper'))
                                     ->downloadable()
                                     ->openable()
-                                    ->previewable(true)
+                                    ->previewable()
                                     ->imageResizeMode('contain')
                                     ->imageCropAspectRatio('3:2')
                                     ->imageResizeTargetWidth('800')
