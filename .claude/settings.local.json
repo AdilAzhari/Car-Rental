@@ -1,25 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "WebFetch(domain:www.flaticon.com)",
-      "Bash(curl:*)",
-      "Bash(php artisan:*)",
-      "Bash(npm run build:*)",
       "Bash(npm install:*)",
-      "Bash(mv:*)",
-      "Bash(find:*)",
-      "Bash(for file in app/Filament/Widgets/*Widget.php)",
-      "Bash(do sed -i 's/namespace App\\\\Filament\\\\Resources\\\\Users\\\\Widgets;/namespace App\\\\Filament\\\\Widgets;/g' \"$file\")",
-      "Bash(done)",
-      "Bash(for file in app/Filament/Resources/Vehicles/Pages/*.php)",
-      "Bash(do sed -i 's/namespace App\\\\Filament\\\\Resources\\\\VehicleResource\\\\Pages;/namespace App\\\\Filament\\\\Resources\\\\Vehicles\\\\Pages;/g' \"$file\")",
-      "Bash(do grep -n \"^namespace\" \"$file\")",
-      "Bash(cat:*)",
-      "Bash(perl -pi -e 's/namespace App\\\\Filament\\\\Resources\\\\VehicleResource\\\\Pages;/namespace App\\\\Filament\\\\Resources\\\\Vehicles\\\\Pages;/' app/Filament/Resources/Vehicles/Pages/ParkingViolations.php app/Filament/Resources/Vehicles/Pages/PayVehicleFines.php app/Filament/Resources/Vehicles/Pages/TrafficViolations.php:*)",
-      "Bash(for file in *.php)",
-      "Bash(do sed -i '1,10s/namespace App\\\\Filament\\\\Resources\\\\Users\\\\Widgets;/namespace App\\\\Filament\\\\Widgets;/' \"$file\")"
+      "Bash(npm run build:*)",
+      "Bash(ssh:*)",
+      "Bash(npm view:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
