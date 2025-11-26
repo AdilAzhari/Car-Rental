@@ -11,7 +11,7 @@ class ReviewFactory extends Factory
 {
     public function definition(): array
     {
-        $rating = fake()->numberBetween(1, 5);
+        $rating = $this->faker->numberBetween(1, 5);
         $comments = [
             1 => [
                 'Terrible experience. Would not recommend to anyone.',
@@ -58,8 +58,8 @@ class ReviewFactory extends Factory
             'vehicle_id' => Vehicle::factory(),
             'renter_id' => User::factory()->renter(),
             'rating' => $rating,
-            'comment' => fake()->optional(0.7)->randomElement($detailedComments) ?? fake()->randomElement($comments[$rating]),
-            'is_visible' => fake()->boolean(85),
+            'comment' => $this->faker->optional(0.7)->randomElement($detailedComments) ?? $this->faker->randomElement($comments[$rating]),
+            'is_visible' => $this->faker->boolean(85),
         ];
     }
 
@@ -67,7 +67,7 @@ class ReviewFactory extends Factory
     {
         return $this->state([
             'rating' => 5,
-            'comment' => fake()->randomElement([
+            'comment' => $this->faker->randomElement([
                 'Outstanding vehicle! Clean, reliable, and the owner was very helpful.',
                 'Perfect car for our trip. Everything was exactly as described.',
                 'Excellent experience from start to finish. Highly recommended!',
@@ -78,8 +78,8 @@ class ReviewFactory extends Factory
     public function poor(): static
     {
         return $this->state([
-            'rating' => fake()->numberBetween(1, 2),
-            'comment' => fake()->randomElement([
+            'rating' => $this->faker->numberBetween(1, 2),
+            'comment' => $this->faker->randomElement([
                 'Car had mechanical issues during our trip.',
                 'Not as described. Very disappointed with the experience.',
                 'Poor communication from the owner. Would not rent again.',

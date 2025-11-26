@@ -11,9 +11,9 @@ class BookingFactory extends Factory
 {
     public function definition(): array
     {
-        $startDate = fake()->dateTimeBetween('-3 months', '+3 months');
-        $endDate = Carbon::parse($startDate)->addDays(fake()->numberBetween(1, 14));
-        $dailyRate = fake()->numberBetween(30, 150);
+        $startDate = $this->faker->dateTimeBetween('-3 months', '+3 months');
+        $endDate = Carbon::parse($startDate)->addDays($this->faker->numberBetween(1, 14));
+        $dailyRate = $this->faker->numberBetween(30, 150);
         $days = Carbon::parse($startDate)->diffInDays($endDate) + 1;
         $totalAmount = $dailyRate * $days;
         $depositAmount = $totalAmount * 0.2;
@@ -25,10 +25,10 @@ class BookingFactory extends Factory
             'start_date' => $startDate,
             'end_date' => $endDate,
             'total_amount' => $totalAmount,
-            'status' => fake()->randomElement(['pending', 'confirmed', 'ongoing', 'completed']),
-            'pickup_location' => fake()->address(),
-            'dropoff_location' => fake()->address(),
-            'special_requests' => fake()->optional()->paragraph(2),
+            'status' => $this->faker->randomElement(['pending', 'confirmed', 'ongoing', 'completed']),
+            'pickup_location' => $this->faker->address(),
+            'dropoff_location' => $this->faker->address(),
+            'special_requests' => $this->faker->optional()->paragraph(2),
             'deposit_amount' => $depositAmount,
             'commission_amount' => $commissionAmount,
         ];

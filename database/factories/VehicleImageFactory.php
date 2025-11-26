@@ -10,7 +10,7 @@ class VehicleImageFactory extends Factory
     public function definition(): array
     {
         $categories = ['economy', 'compact', 'midsize', 'luxury', 'suv', 'sports', 'convertible', 'pickup', 'minivan', 'electric'];
-        fake()->randomElement($categories);
+        $this->faker->randomElement($categories);
 
         // Only use actual image files that exist
         $availableImages = [
@@ -39,12 +39,12 @@ class VehicleImageFactory extends Factory
             'minivan-honda-odyssey.jpg',
         ];
 
-        $imagePath = 'vehicles/'.fake()->randomElement($availableImages);
+        $imagePath = 'vehicles/'.$this->faker->randomElement($availableImages);
 
         return [
             'vehicle_id' => Vehicle::factory(),
             'image_path' => $imagePath,
-            'alt_text' => fake()->randomElement([
+            'alt_text' => $this->faker->randomElement([
                 'Front view of the vehicle',
                 'Side view of the car',
                 'Interior dashboard view',
@@ -61,7 +61,7 @@ class VehicleImageFactory extends Factory
                 'Dashboard instruments',
                 'Seat upholstery detail',
             ]),
-            'is_primary' => fake()->boolean(15), // 15% chance of being primary
+            'is_primary' => $this->faker->boolean(15), // 15% chance of being primary
         ];
     }
 

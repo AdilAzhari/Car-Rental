@@ -29,7 +29,7 @@ class LogFactory extends Factory
             'price_updated' => 'Vehicle daily rate was updated',
         ];
 
-        $action = fake()->randomKey($actions);
+        $action = $this->faker->randomKey($actions);
         $userAgents = [
             'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15',
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -39,18 +39,18 @@ class LogFactory extends Factory
 
         return [
             'vehicle_id' => Vehicle::factory(), // Always require a vehicle
-            'user_id' => fake()->boolean(75) ? User::factory() : null,
+            'user_id' => $this->faker->boolean(75) ? User::factory() : null,
             'action' => $action,
             'description' => $actions[$action],
-            'metadata' => fake()->optional(0.4)->passthrough([
-                'ip_address' => fake()->ipv4(),
-                'user_agent' => fake()->randomElement($userAgents),
-                'browser' => fake()->randomElement(['Chrome', 'Firefox', 'Safari', 'Edge']),
-                'device_type' => fake()->randomElement(['desktop', 'mobile', 'tablet']),
-                'location' => fake()->city(),
-                'session_id' => fake()->uuid(),
-                'previous_value' => fake()->optional()->word(),
-                'new_value' => fake()->optional()->word(),
+            'metadata' => $this->faker->optional(0.4)->passthrough([
+                'ip_address' => $this->faker->ipv4(),
+                'user_agent' => $this->faker->randomElement($userAgents),
+                'browser' => $this->faker->randomElement(['Chrome', 'Firefox', 'Safari', 'Edge']),
+                'device_type' => $this->faker->randomElement(['desktop', 'mobile', 'tablet']),
+                'location' => $this->faker->city(),
+                'session_id' => $this->faker->uuid(),
+                'previous_value' => $this->faker->optional()->word(),
+                'new_value' => $this->faker->optional()->word(),
             ]),
         ];
     }

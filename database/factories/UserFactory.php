@@ -26,19 +26,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'phone' => fake()->phoneNumber(),
-            'role' => fake()->randomElement([UserRole::OWNER, UserRole::RENTER]),
-            'status' => fake()->randomElement([UserStatus::PENDING, UserStatus::APPROVED, UserStatus::ACTIVE]),
-            'license_number' => fake()->bothify('???-####-####'),
+            'phone' => $this->faker->phoneNumber(),
+            'role' => $this->faker->randomElement([UserRole::OWNER, UserRole::RENTER]),
+            'status' => $this->faker->randomElement([UserStatus::PENDING, UserStatus::APPROVED, UserStatus::ACTIVE]),
+            'license_number' => $this->faker->bothify('???-####-####'),
             'id_document_path' => 'documents/ids/'.fake()->uuid().'.pdf',
             'license_document_path' => 'documents/licenses/'.fake()->uuid().'.pdf',
-            'is_verified' => fake()->boolean(70),
-            'date_of_birth' => fake()->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
-            'address' => fake()->address(),
+            'is_verified' => $this->faker->boolean(70),
+            'date_of_birth' => $this->faker->dateTimeBetween('-65 years', '-18 years')->format('Y-m-d'),
+            'address' => $this->faker->address(),
             'remember_token' => Str::random(10),
         ];
     }
