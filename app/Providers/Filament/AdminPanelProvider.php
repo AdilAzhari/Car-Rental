@@ -41,10 +41,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('SENTIENTS A.I')
-            ->brandLogo(asset('images/logo.jpg'))
-            ->darkModeBrandLogo(asset('images/logo.jpg'))
+            ->brandLogo(asset('storage/images/logo.jpg'))
+            ->darkModeBrandLogo(asset('storage/images/logo.jpg'))
             ->brandLogoHeight('2.5rem')
-            ->favicon(asset('images/logo.jpg'))
+            ->favicon(asset('storage/images/logo.jpg'))
             ->login(PagesLogin::class)
             ->colors([
                 'primary' => Color::Amber,
@@ -70,7 +70,7 @@ class AdminPanelProvider extends PanelProvider
             )
             ->renderHook(
                 'panels::styles.after',
-                fn (): string => '<link rel="stylesheet" href="'.asset('build/assets/mobile-responsive.css').'">'
+                fn (): string => '<link rel="stylesheet" href="'.\Illuminate\Support\Facades\Vite::asset('resources/css/mobile-responsive.css').'">'
             )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

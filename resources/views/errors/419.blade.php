@@ -9,7 +9,7 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="text-center">
         <div class="mb-4">
-            <img src="{{ asset('images/logo.jpg') }}" alt="SENTIENTS A.I" class="mx-auto w-20 h-20 rounded-xl object-cover shadow-lg">
+            <img src="{{ asset('storage/images/logo.jpg') }}" alt="SENTIENTS A.I" class="mx-auto w-20 h-20 rounded-xl object-cover shadow-lg">
         </div>
         <h1 class="text-6xl font-bold text-yellow-600 mb-4">419</h1>
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Page Expired</h2>

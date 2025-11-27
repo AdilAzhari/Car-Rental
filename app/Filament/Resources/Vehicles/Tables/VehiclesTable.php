@@ -61,9 +61,9 @@ class VehiclesTable
                     ->label(__('resources.image'))
                     ->size(80)
                     ->circular()
-                    ->defaultImageUrl(url('/images/car-placeholder.jpg'))
+                    ->defaultImageUrl(url('/storage/images/car-placeholder.jpg'))
                     ->visibleFrom('md')
-                    ->getStateUsing(fn ($record) => $record->featured_image ?: '/images/car-placeholder.jpg'),
+                    ->getStateUsing(fn ($record) => $record->featured_image ?: '/storage/images/car-placeholder.jpg'),
 
                 TextColumn::make('make')
                     ->label(__('resources.make'))
