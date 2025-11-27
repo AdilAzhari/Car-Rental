@@ -8,17 +8,18 @@ use Illuminate\Support\Facades\Log;
 
 class MacrokioskSmsService
 {
-    private string $baseUrl;
-    private string $username;
-    private string $password;
-    private string $serviceId;
-    private string $sendEndpoint;
-    private string $defaultSender;
+    private ?string $baseUrl;
+    private ?string $username;
+    private ?string $password;
+    private ?string $serviceId;
+    private ?string $sendEndpoint;
+    private ?string $defaultSender;
     private bool $useJwt;
     private int $maxRetries;
     private int $retryDelay;
     private int $asciiMaxLength;
     private int $unicodeMaxLength;
+    private bool $isConfigured = false;
 
     private ?MacrokioskJwtService $jwtService = null;
 
@@ -26,21 +27,32 @@ class MacrokioskSmsService
     {
         $config = config('sms.macrokiosk');
 
-        $this->baseUrl = $config['base_url'];
-        $this->username = $config['username'];
-        $this->password = $config['password'];
-        $this->serviceId = $config['service_id'];
-        $this->sendEndpoint = $config['send_endpoint'];
-        $this->defaultSender = $config['default_sender'];
-        $this->useJwt = $config['use_jwt'];
-        $this->maxRetries = $config['retry_attempts'];
-        $this->retryDelay = $config['retry_delay'];
-        $this->asciiMaxLength = $config['ascii_max_length'];
-        $this->unicodeMaxLength = $config['unicode_max_length'];
+        $this->baseUrl = $config['base_url'] ?? null;
+        $this->username = $config['username'] ?? null;
+        $this->password = $config['password'] ?? null;
+        $this->serviceId = $config['service_id'] ?? null;
+        $this->sendEndpoint = $config['send_endpoint'] ?? '/Send';
+        $this->defaultSender = $config['default_sender'] ?? 'CarRental';
+        $this->useJwt = $config['use_jwt'] ?? false;
+        $this->maxRetries = $config['retry_attempts'] ?? 3;
+        $this->retryDelay = $config['retry_delay'] ?? 2;
+        $this->asciiMaxLength = $config['ascii_max_length'] ?? 1071;
+        $this->unicodeMaxLength = $config['unicode_max_length'] ?? 1000;
 
-        if ($this->useJwt) {
+        // Check if service is properly configured
+        $this->isConfigured = !empty($this->username) && !empty($this->password) && !empty($this->serviceId);
+
+        if ($this->useJwt && $this->isConfigured) {
             $this->jwtService = new MacrokioskJwtService();
         }
+    }
+
+    /**
+     * Check if SMS service is configured
+     */
+    public function isConfigured(): bool
+    {
+        return $this->isConfigured;
     }
 
     /**
@@ -53,6 +65,20 @@ class MacrokioskSmsService
      */
     public function send(string|array $to, string $message, ?string $sender = null): array
     {
+        // Check if service is configured
+        if (!$this->isConfigured) {
+            Log::warning('SMS service not configured', [
+                'to' => $to,
+                'message_preview' => substr($message, 0, 50),
+            ]);
+
+            return [
+                'success' => false,
+                'error' => 'SMS service is not configured. Please set SMS_USERNAME, SMS_PASSWORD, and SMS_SERVICE_ID in .env',
+                'error_code' => 'NOT_CONFIGURED',
+            ];
+        }
+
         try {
             // Normalize phone numbers to array
             $recipients = is_array($to) ? $to : [$to];
@@ -309,6 +335,14 @@ class MacrokioskSmsService
      */
     public function checkTrafficViolations(string $plateNumber, string $toNumber = '15888'): array
     {
+        if (!$this->isConfigured) {
+            return [
+                'success' => false,
+                'error' => 'SMS service is not configured',
+                'error_code' => 'NOT_CONFIGURED',
+            ];
+        }
+
         // Format: JPJ <PLATE_NUMBER>
         $message = 'JPJ ' . strtoupper($plateNumber);
 
