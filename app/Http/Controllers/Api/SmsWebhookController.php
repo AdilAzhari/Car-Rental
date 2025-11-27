@@ -7,6 +7,7 @@ use App\Models\SmsMessage;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class SmsWebhookController extends Controller
@@ -25,26 +26,31 @@ class SmsWebhookController extends Controller
      *   "received_at": "2024-01-01 12:00:00"
      * }
      */
-    public function receive(Request $request): JsonResponse
+    public function receive(Request $request): JsonResponse|Response
     {
         try {
             // Flexible validation - accept different field names
-            $messageId = $request->input('message_id')
+            // Macrokiosk uses: msgID, from/msisdn, shortcode/longcode, text
+            $messageId = $request->input('msgID')
+                      ?? $request->input('message_id')
                       ?? $request->input('id')
                       ?? $request->input('sid')
                       ?? uniqid('sms_', true);
 
             $from = $request->input('from')
+                 ?? $request->input('msisdn')
                  ?? $request->input('sender')
                  ?? $request->input('from_number');
 
-            $to = $request->input('to')
+            $to = $request->input('shortcode')
+               ?? $request->input('longcode')
+               ?? $request->input('to')
                ?? $request->input('recipient')
                ?? $request->input('to_number');
 
-            $body = $request->input('body')
+            $body = $request->input('text')
+                 ?? $request->input('body')
                  ?? $request->input('message')
-                 ?? $request->input('text')
                  ?? $request->input('content');
 
             $receivedAt = $request->input('received_at')
@@ -90,6 +96,14 @@ class SmsWebhookController extends Controller
                 $this->processJpjResponse($vehicle, $parsedData, $smsMessage);
             }
 
+            // Macrokiosk expects "-1" response for success
+            // Other providers get JSON response
+            if ($request->input('msgID') || $request->input('msisdn')) {
+                // Macrokiosk format
+                return response('-1', 200)->header('Content-Type', 'text/plain');
+            }
+
+            // Standard JSON response for other providers
             return response()->json([
                 'success' => true,
                 'message' => 'SMS received and stored successfully',
