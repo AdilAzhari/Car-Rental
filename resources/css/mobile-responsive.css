@@ -441,15 +441,35 @@
 
 /* Improve logo visibility on mobile */
 @media (max-width: 640px) {
-    .fi-logo {
-        max-height: 2rem !important;
+    .fi-logo,
+    .fi-sidebar .fi-logo,
+    .fi-sidebar-header img,
+    .fi-sidebar-header .fi-logo {
+        max-height: 1.5rem !important;
+        height: 1.5rem !important;
         width: auto !important;
     }
 
     .fi-sidebar-header {
-        min-height: 64px !important;
+        min-height: 56px !important;
+        padding: 0.75rem 1rem !important;
         display: flex !important;
         align-items: center !important;
+    }
+
+    /* Also reduce brand name text size if present */
+    .fi-sidebar-header .fi-brand-name {
+        font-size: 0.875rem !important;
+    }
+}
+
+/* Make logo even smaller on tablet sidebar */
+@media (max-width: 1024px) {
+    .fi-sidebar .fi-logo,
+    .fi-sidebar-header img,
+    .fi-sidebar-header .fi-logo {
+        max-height: 1.75rem !important;
+        height: 1.75rem !important;
     }
 }
 
