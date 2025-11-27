@@ -23,7 +23,7 @@ use App\Enums\VehicleStatus;
 use App\Filament\Resources\Users\RelationManagers\ReviewsRelationManager;
 use App\Filament\Resources\Vehicles\Pages;
 use App\Filament\Resources\Vehicles\RelationManagers;
-use App\Filament\Resources\VehicleResource\Schemas\VehicleInfolist;
+use App\Filament\Resources\Vehicles\Schemas\VehicleInfolist;
 use App\Filament\Resources\Vehicles\RelationManagers\BookingsRelationManager;
 use App\Models\User;
 use App\Policies\VehiclePolicy;

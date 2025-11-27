@@ -20,7 +20,7 @@ use App\Enums\UserStatus;
 use App\Enums\VehicleStatus;
 use App\Filament\Resources\VehicleResource\Pages;
 use App\Filament\Resources\VehicleResource\RelationManagers;
-use App\Filament\Resources\VehicleResource\Schemas\VehicleInfolist;
+use App\Filament\Resources\Vehicles\Schemas\VehicleInfolist;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Services\FilamentQueryOptimizationService;
