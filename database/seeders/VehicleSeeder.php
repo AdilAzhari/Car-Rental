@@ -6,10 +6,18 @@ use App\Models\Log;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleImage;
+use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 
 class VehicleSeeder extends Seeder
 {
+    protected $faker;
+
+    public function __construct(Faker $faker)
+    {
+        $this->faker = $faker;
+    }
+
     public function run(): void
     {
         $owners = User::query()->where('role', 'owner')->get();

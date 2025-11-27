@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleImage;
+use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,6 +17,13 @@ use Illuminate\Support\Facades\Hash;
  */
 class CarRentalSeeder extends Seeder
 {
+    protected $faker;
+
+    public function __construct(Faker $faker)
+    {
+        $this->faker = $faker;
+    }
+
     /**
      * Comprehensive seeder for edge cases and complex scenarios
      */

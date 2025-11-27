@@ -580,4 +580,5 @@ return [
     'show_selected' => 'Show Selected',
     'values_properties' => 'Values Properties',
     'reviewed_on' => 'Reviewed On',
+    ''
 ];

@@ -11,10 +11,10 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -113,7 +113,7 @@ class PaymentsRelationManager extends RelationManager
                             Section::make(__('resources.payment_details'))
                                 ->schema([
                                     Grid::make()
-                                        ->columns(2)
+                                        ->columns()
                                         ->schema([
                                             TextEntry::make('id')
                                                 ->label(__('resources.payment_id'))

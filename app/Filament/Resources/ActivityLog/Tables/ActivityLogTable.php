@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\ActivityLog\Tables;
 
-use App\Filament\Resources\ActivityLogResource\Schemas\ActivityLogInfolist;
+use App\Filament\Resources\ActivityLog\Schemas\ActivityLogInfolist;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;

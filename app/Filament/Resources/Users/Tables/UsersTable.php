@@ -2,41 +2,26 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Filament\Resources\Users\Schemas\UserInfolist;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Filament\Resources\UserResource\Schemas\UserInfolist;
 use App\Models\User;
-use App\Policies\UserPolicy;
-use App\Services\FilamentQueryOptimizationService;
-use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Filters\Filter;
@@ -88,7 +73,6 @@ class UsersTable
                     ->icon(fn ($state): string => match ($state) {
                         'admin' => 'heroicon-m-shield-check',
                         'owner' => 'heroicon-m-building-storefront',
-                        'renter' => 'heroicon-m-user',
                         default => 'heroicon-m-user',
                     }),
 
@@ -224,11 +208,11 @@ class UsersTable
 
                         Notification::make()
                             ->title('Password Changed')
-                            ->body("Password for {$record->name} has been updated successfully.")
+                            ->body("Password for $record->name has been updated successfully.")
                             ->success()
                             ->send();
                     })
-                    ->modalHeading(fn ($record): string => "Change Password for {$record->name}")
+                    ->modalHeading(fn ($record): string => "Change Password for $record->name")
                     ->modalDescription('Set a new password for this user account.')
                     ->modalSubmitActionLabel('Change Password')
                     ->visible(fn (): bool => auth()->user()?->role === UserRole::ADMIN),

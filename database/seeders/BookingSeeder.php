@@ -9,11 +9,17 @@ use App\Models\Review;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
+use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 
 class BookingSeeder extends Seeder
 {
     private $faker;
+
+    public function __construct(Faker $faker)
+    {
+        $this->faker = $faker;
+    }
 
     public function run(): void
     {
