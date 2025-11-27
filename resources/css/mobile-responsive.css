@@ -260,9 +260,9 @@
         transform: translateX(0) !important;
     }
 
-    /* Add backdrop overlay when sidebar is open */
-    .fi-sidebar-open::after,
-    [x-data*="sidebarOpen"]::after {
+    /* Add backdrop overlay when sidebar is open - on body to avoid blocking sidebar */
+    body:has(.fi-sidebar-open)::before,
+    body.fi-sidebar-open::before {
         content: '' !important;
         position: fixed !important;
         top: 0 !important;
@@ -270,9 +270,19 @@
         right: 0 !important;
         bottom: 0 !important;
         background-color: rgba(0, 0, 0, 0.5) !important;
-        z-index: 30 !important;
+        z-index: 35 !important;
         transition: opacity 0.3s ease-in-out !important;
         opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    /* Ensure sidebar is above backdrop and clickable */
+    .fi-sidebar {
+        pointer-events: auto !important;
+    }
+
+    .fi-sidebar * {
+        pointer-events: auto !important;
     }
 
     /* Mobile menu toggle button styling */
@@ -439,69 +449,87 @@
     }
 }
 
-/* Improve logo visibility on mobile - Make it much smaller */
+/* Drastically reduce logo on mobile - hide text completely */
 @media (max-width: 640px) {
-    /* Target all possible logo elements in sidebar */
+    /* Hide the entire sidebar header/logo on mobile to save space */
+    .fi-sidebar-header {
+        display: none !important;
+    }
+
+    /* If you want to keep a tiny logo, use this instead: */
+    /* .fi-sidebar-header {
+        min-height: 3rem !important;
+        max-height: 3rem !important;
+        padding: 0.5rem 1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+
     .fi-sidebar .fi-logo,
     .fi-sidebar-header img,
     .fi-sidebar-header .fi-logo,
     .fi-sidebar-header a img,
     .fi-sidebar img[alt*="logo" i],
     .fi-sidebar img[src*="logo" i] {
-        max-height: 2.5rem !important;
-        height: 2.5rem !important;
-        max-width: 2.5rem !important;
-        width: auto !important;
+        max-height: 2rem !important;
+        height: 2rem !important;
+        max-width: 2rem !important;
+        width: 2rem !important;
         object-fit: contain !important;
+        object-position: center !important;
     }
 
-    /* Reduce sidebar header height significantly */
-    .fi-sidebar-header {
-        min-height: 3.5rem !important;
-        max-height: 3.5rem !important;
-        padding: 0.5rem 1rem !important;
-        display: flex !important;
-        align-items: center !important;
-        overflow: hidden !important;
-    }
-
-    /* Hide or reduce brand name/tagline text */
     .fi-sidebar-header .fi-brand-name,
-    .fi-sidebar-header span,
-    .fi-sidebar-header p {
-        font-size: 0.75rem !important;
-        line-height: 1rem !important;
-        max-width: 150px !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
+    .fi-sidebar-header span:not(.fi-logo),
+    .fi-sidebar-header p,
+    .fi-sidebar-header div:not(:has(img)) {
+        display: none !important;
     }
 
-    /* Make logo link container compact */
     .fi-sidebar-header a {
         display: flex !important;
         align-items: center !important;
-        gap: 0.5rem !important;
-        max-height: 2.5rem !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        max-height: 2rem !important;
         overflow: hidden !important;
+    } */
+
+    /* Move navigation higher since logo is hidden */
+    .fi-sidebar-nav,
+    .fi-sidebar nav {
+        padding-top: 0.5rem !important;
     }
 }
 
-/* Make logo smaller on tablet sidebar too */
-@media (max-width: 1024px) {
+/* Make logo smaller on tablet sidebar */
+@media (min-width: 641px) and (max-width: 1024px) {
     .fi-sidebar .fi-logo,
     .fi-sidebar-header img,
     .fi-sidebar-header .fi-logo,
     .fi-sidebar-header a img {
-        max-height: 3rem !important;
-        height: 3rem !important;
-        max-width: 3rem !important;
+        max-height: 2.5rem !important;
+        height: 2.5rem !important;
+        max-width: 100px !important;
         object-fit: contain !important;
     }
 
     .fi-sidebar-header {
-        min-height: 4rem !important;
-        max-height: 4rem !important;
+        min-height: 3.5rem !important;
+        max-height: 3.5rem !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    /* Hide brand text on tablet too */
+    .fi-sidebar-header .fi-brand-name,
+    .fi-sidebar-header span:not(.fi-logo) {
+        font-size: 0.75rem !important;
+        max-width: 120px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
     }
 }
 
