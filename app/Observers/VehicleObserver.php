@@ -47,8 +47,11 @@ class VehicleObserver
                 $vehicle->owner->notify(new VehicleStatusChanged($vehicle, $oldStatusValue, $newStatusValue));
             }
 
-            // Notify admins
-            $admins = User::where('role', UserRole::ADMIN)->get();
+            // Notify admins (exclude owner to avoid duplicate notification)
+            $admins = User::where('role', UserRole::ADMIN)
+                ->where('id', '!=', $vehicle->owner_id)
+                ->get();
+
             foreach ($admins as $admin) {
                 $admin->notify(new VehicleStatusChanged($vehicle, $oldStatusValue, $newStatusValue));
             }
