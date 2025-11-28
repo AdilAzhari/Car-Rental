@@ -13,6 +13,16 @@ class ListVehicles extends ListRecords
 {
     protected static string $resource = VehicleResource::class;
 
+    protected function getTableDefaultSortColumn(): ?string
+    {
+        return 'id';
+    }
+
+    protected function getTableDefaultSortDirection(): ?string
+    {
+        return 'desc';
+    }
+
     protected function getHeaderActions(): array
     {
         return [
