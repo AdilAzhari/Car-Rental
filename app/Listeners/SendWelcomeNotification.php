@@ -29,10 +29,10 @@ class SendWelcomeNotification implements ShouldQueue
             ]);
         }
 
-        // Only send welcome notification for new users
+        // Only send notifications for new users
         if ($user->is_new_user) {
-            // Send welcome notification
-            $user->notify(new WelcomeNewUser);
+            // Welcome notification disabled - users already receive email confirmation
+            // $user->notify(new WelcomeNewUser);
 
             // Schedule password change reminder for 7 days later if they haven't changed it
             if (! $user->has_changed_default_password) {

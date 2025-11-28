@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\SmsMessage;
+use App\Models\User;
 use App\Models\Vehicle;
+use App\Notifications\TrafficViolationDetected;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -239,6 +242,31 @@ class SmsWebhookController extends Controller
                 'total_fines_amount' => $parsedData['total_fines_amount'],
                 'has_pending_violations' => $parsedData['has_pending_violations'],
             ]);
+
+            // Send notification if violations detected
+            if ($parsedData['has_violations'] && count($parsedData['violations']) > 0) {
+                // Notify vehicle owner
+                if ($vehicle->owner) {
+                    $vehicle->owner->notify(new TrafficViolationDetected(
+                        $vehicle,
+                        count($parsedData['violations']),
+                        $parsedData['total_fines_amount']
+                    ));
+                }
+
+                // Notify admins (exclude owner to avoid duplicate)
+                $admins = User::where('role', UserRole::ADMIN)
+                    ->where('id', '!=', $vehicle->owner_id)
+                    ->get();
+
+                foreach ($admins as $admin) {
+                    $admin->notify(new TrafficViolationDetected(
+                        $vehicle,
+                        count($parsedData['violations']),
+                        $parsedData['total_fines_amount']
+                    ));
+                }
+            }
 
             // Mark SMS as processed
             $smsMessage->markAsProcessed();
