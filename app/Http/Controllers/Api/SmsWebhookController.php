@@ -166,14 +166,13 @@ class SmsWebhookController extends Controller
         if (!empty($fineMatches[1])) {
             foreach ($fineMatches[1] as $index => $fineAmount) {
                 $violation = [
-                    'type' => $this->detectViolationType($body),
-                    'date' => now()->subDays(rand(1, 30))->toDateString(),
-                    'location' => 'As per SMS',
+                    // Only include REAL data from SMS
                     'fine_amount' => (float) $fineAmount,
-                    'status' => 'pending',
-                    'reference' => 'REF' . str_pad($index + 1, 6, '0', STR_PAD_LEFT),
-                    'due_date' => now()->addDays(30)->toDateString(),
-                    'description' => trim($body),
+                    'sms_message' => trim($body),
+                    'received_at' => now()->toDateTimeString(),
+
+                    // Additional parsed info (best effort from SMS content)
+                    'type' => $this->detectViolationType($body),
                 ];
 
                 $result['violations'][] = $violation;

@@ -18,18 +18,16 @@
                             {{ __('resources.traffic_violations') }}
                         </h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            {{ count($violations) }} violation{{ count($violations) > 1 ? 's' : '' }} found
+                            {{ count($violations) }} violation{{ count($violations) > 1 ? 's' : '' }} found from JPJ SMS
                         </p>
                     </div>
-                    @if($hasPending)
-                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
-                            <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                            <span class="text-xs font-medium text-red-700 dark:text-red-300">Action Required</span>
-                        </div>
-                    @endif
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
+                        <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs font-medium text-red-700 dark:text-red-300">From SMS</span>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-white dark:bg-gray-800/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
@@ -48,26 +46,12 @@
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
                                 <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Pending</p>
-                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ collect($violations)->where('status', 'pending')->count() }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-gray-800/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Resolved</p>
-                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ collect($violations)->where('status', '!=', 'pending')->count() }}</p>
+                                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Violations</p>
+                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ count($violations) }}</p>
                             </div>
                         </div>
                     </div>
@@ -89,42 +73,26 @@
         <!-- Violations List -->
         <div class="space-y-4">
             @foreach($violations as $index => $violation)
-                @php
-                    $isPending = ($violation['status'] ?? '') === 'pending';
-                    $statusColor = $isPending ? 'red' : 'green';
-                @endphp
-
-                <div class="group relative overflow-hidden rounded-xl border transition-all duration-200 hover:shadow-lg
-                    {{ $isPending
-                        ? 'border-red-200 dark:border-red-800 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/10 dark:to-pink-900/10 hover:border-red-300 dark:hover:border-red-700'
-                        : 'border-green-200 dark:border-green-800 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10 hover:border-green-300 dark:hover:border-green-700'
-                    }}">
+                <div class="group relative overflow-hidden rounded-xl border transition-all duration-200 hover:shadow-lg border-red-200 dark:border-red-800 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/10 dark:to-pink-900/10 hover:border-red-300 dark:hover:border-red-700">
 
                     <!-- Status indicator line -->
-                    <div class="absolute left-0 top-0 w-1 h-full {{ $isPending ? 'bg-red-500' : 'bg-green-500' }}"></div>
+                    <div class="absolute left-0 top-0 w-1 h-full bg-red-500"></div>
 
                     <div class="p-6 pl-8">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex-1">
                                 <div class="flex items-center gap-3 mb-2">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                                        {{ $violation['type'] ?? $violation['violation_type'] ?? __('resources.traffic_violation') }}
+                                        {{ $violation['type'] ?? __('resources.traffic_violation') }}
                                     </h4>
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
-                                        {{ $isPending
-                                            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                                            : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                        }}">
-                                        {{ ucfirst($violation['status'] ?? 'Unknown') }}
-                                    </span>
                                 </div>
 
                                 @if(isset($violation['fine_amount']))
-                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg {{ $isPending ? 'bg-red-100 dark:bg-red-900/30' : 'bg-green-100 dark:bg-green-900/30' }}">
-                                        <svg class="w-4 h-4 {{ $isPending ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-900/30">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                                         </svg>
-                                        <span class="font-semibold {{ $isPending ? 'text-red-700 dark:text-red-300' : 'text-green-700 dark:text-green-300' }}">
+                                        <span class="font-semibold text-red-700 dark:text-red-300">
                                             RM {{ number_format($violation['fine_amount'], 2) }}
                                         </span>
                                     </div>
@@ -136,87 +104,42 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                            @if(isset($violation['date']))
+                        <!-- SMS Message - PROMINENT DISPLAY -->
+                        @if(isset($violation['sms_message']) && $violation['sms_message'])
+                            <div class="mt-4 p-5 rounded-lg bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800">
+                                <div class="flex items-start gap-3 mb-3">
+                                    <div class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/40 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h5 class="font-semibold text-gray-900 dark:text-gray-100 mb-1">JPJ SMS Message</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Original violation notice from JPJ</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-md bg-white dark:bg-red-950/20 border border-red-100 dark:border-red-900">
+                                    <p class="text-sm font-medium text-red-900 dark:text-red-100 whitespace-pre-line leading-relaxed">{{ $violation['sms_message'] }}</p>
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Additional Info -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mt-4">
+                            @if(isset($violation['received_at']))
                                 <div class="flex items-center gap-3">
                                     <div class="w-6 h-6 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0">
                                         <svg class="w-3 h-3 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="font-medium text-gray-700 dark:text-gray-300">Date</span>
-                                        <p class="text-gray-900 dark:text-gray-100">{{ Carbon::parse($violation['date'])->format('d M Y') }}</p>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if(isset($violation['location']))
-                                <div class="flex items-center gap-3">
-                                    <div class="w-6 h-6 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-3 h-3 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="font-medium text-gray-700 dark:text-gray-300">Location</span>
-                                        <p class="text-gray-900 dark:text-gray-100">{{ $violation['location'] }}</p>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if(isset($violation['reference']) || isset($violation['reference_number']))
-                                <div class="flex items-center gap-3">
-                                    <div class="w-6 h-6 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-3 h-3 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="font-medium text-gray-700 dark:text-gray-300">Reference</span>
-                                        <p class="text-gray-900 dark:text-gray-100 font-mono text-xs">{{ $violation['reference'] ?? $violation['reference_number'] }}</p>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if(isset($violation['due_date']) && $isPending)
-                                <div class="flex items-center gap-3">
-                                    <div class="w-6 h-6 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-3 h-3 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </div>
                                     <div>
-                                        <span class="font-medium text-orange-700 dark:text-orange-300">Due Date</span>
-                                        <p class="text-orange-900 dark:text-orange-100">{{ Carbon::parse($violation['due_date'])->format('d M Y') }}</p>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if(isset($violation['paid_date']) && !$isPending)
-                                <div class="flex items-center gap-3">
-                                    <div class="w-6 h-6 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <span class="font-medium text-green-700 dark:text-green-300">Paid Date</span>
-                                        <p class="text-green-900 dark:text-green-100">{{ Carbon::parse($violation['paid_date'])->format('d M Y') }}</p>
+                                        <span class="font-medium text-gray-700 dark:text-gray-300">Received</span>
+                                        <p class="text-gray-900 dark:text-gray-100">{{ Carbon::parse($violation['received_at'])->format('d M Y, H:i') }}</p>
                                     </div>
                                 </div>
                             @endif
                         </div>
-
-                        @if(isset($violation['description']) && $violation['description'])
-                            <div class="mt-4 p-4 rounded-lg {{ $isPending ? 'bg-red-50 dark:bg-red-900/20' : 'bg-green-50 dark:bg-green-900/20' }} border {{ $isPending ? 'border-red-100 dark:border-red-800' : 'border-green-100 dark:border-green-800' }}">
-                                <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-1">Description</h5>
-                                <p class="text-sm {{ $isPending ? 'text-red-700 dark:text-red-300' : 'text-green-700 dark:text-green-300' }}">
-                                    {{ $violation['description'] }}
-                                </p>
-                            </div>
-                        @endif
                     </div>
                 </div>
             @endforeach
