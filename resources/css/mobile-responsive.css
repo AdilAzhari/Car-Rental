@@ -1,167 +1,85 @@
-/* Mobile Responsive Styles for Filament Dashboard */
+/* ============================================
+   MOBILE RESPONSIVE STYLES FOR FILAMENT ADMIN
+   ============================================ */
 
-/* Responsive Grid System */
+/* ============================================
+   1. MOBILE SIDEBAR (d640px)
+   ============================================ */
 @media (max-width: 640px) {
-    /* Mobile: Force single column for stats */
-    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
-        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    /* Hide logo completely on mobile to save space */
+    .fi-sidebar-header {
+        display: none !important;
     }
 
-    /* Make sidebar full width when open on mobile */
+    /* Move navigation to top */
+    .fi-sidebar-nav,
+    .fi-sidebar nav {
+        padding-top: 0.5rem !important;
+    }
+
+    /* Sidebar dimensions */
     .fi-sidebar {
         width: 85% !important;
-        max-width: 320px !important;
-        transition: transform 0.3s ease-in-out !important;
+        max-width: 300px !important;
     }
 
-    /* Sidebar brand/logo area */
-    .fi-sidebar-header {
-        padding: 1rem !important;
-    }
-
-    /* Sidebar navigation items */
-    .fi-sidebar-nav {
-        padding: 0.5rem !important;
-    }
-
-    .fi-sidebar-item {
+    /* Sidebar items - touch-friendly */
+    .fi-sidebar-item,
+    .fi-sidebar-item-button {
+        min-height: 44px !important;
         padding: 0.75rem 1rem !important;
         margin-bottom: 0.25rem !important;
+        touch-action: manipulation !important;
     }
 
     /* Sidebar group labels */
     .fi-sidebar-group-label {
         padding: 0.5rem 1rem !important;
         font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
     }
 
-    /* Collapsible sidebar items */
-    .fi-sidebar-item-button {
-        padding: 0.75rem 1rem !important;
-        font-size: 0.875rem !important;
+    /* Sidebar navigation padding */
+    .fi-sidebar-nav {
+        padding: 0.5rem !important;
     }
 
-    /* Adjust top bar for mobile */
+    /* Sidebar content spacing */
+    .fi-sidebar-content {
+        padding-bottom: 2rem !important;
+    }
+
+    /* Single column for stats */
+    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+
+    /* Stat cards styling */
+    .fi-wi-stats-overview-stat {
+        padding: 1rem !important;
+    }
+
+    .fi-wi-stats-overview-stat-value {
+        font-size: 1.5rem !important;
+    }
+
+    .fi-wi-stats-overview-stat-description {
+        font-size: 0.75rem !important;
+    }
+
+    /* Topbar adjustments */
     .fi-topbar {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
     }
 
-    /* Make tables scrollable horizontally */
-    .fi-ta {
-        overflow-x: auto !important;
-    }
-
-    /* Adjust form layouts for mobile */
-    .fi-fo-field-wrp-label {
-        margin-bottom: 0.5rem !important;
-    }
-
-    /* Stack form actions vertically */
-    .fi-fo-actions {
-        flex-direction: column !important;
-        gap: 0.5rem !important;
-    }
-
-    .fi-fo-actions > * {
-        width: 100% !important;
-    }
-
-    /* Make modal full screen on mobile */
-    .fi-modal {
-        margin: 0 !important;
-        max-width: 100% !important;
-        height: 100vh !important;
-        border-radius: 0 !important;
-    }
-
-    /* Adjust widget cards */
-    .fi-wi {
-        margin-bottom: 1rem !important;
-    }
-
-    /* Make action buttons full width */
-    .fi-btn {
-        width: 100% !important;
-        justify-content: center !important;
-    }
-
-    /* Stack table header actions */
-    .fi-ta-header-actions {
-        flex-direction: column !important;
-        gap: 0.5rem !important;
-    }
-
-    /* Reduce padding on mobile */
+    /* Main content padding */
     .fi-main {
         padding: 1rem !important;
     }
 
-    /* Make breadcrumbs wrap properly */
-    .fi-breadcrumbs {
-        flex-wrap: wrap !important;
-    }
-
-    /* Hide less important columns on mobile tables */
-    .fi-ta-cell:nth-child(n+4),
-    .fi-ta-header-cell:nth-child(n+4) {
-        display: none;
-    }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-    /* Tablet: 2 columns for stats */
-    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-
-    /* Adjust padding for tablets */
-    .fi-main {
-        padding: 1.5rem !important;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    /* Desktop: 3 columns for stats */
-    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    }
-}
-
-/* Touch-friendly improvements */
-@media (hover: none) and (pointer: coarse) {
-    /* Increase touch targets */
-    .fi-btn,
-    .fi-link,
-    .fi-ta-row {
-        min-height: 44px !important;
-        min-width: 44px !important;
-    }
-
-    /* Add more padding to clickable elements */
-    .fi-ta-cell {
-        padding: 1rem !important;
-    }
-
-    /* Make dropdowns easier to tap */
-    .fi-select,
-    .fi-input {
-        min-height: 44px !important;
-        font-size: 16px !important; /* Prevents iOS zoom */
-    }
-}
-
-/* Responsive Images */
-@media (max-width: 640px) {
-    .fi-fi-image,
-    img {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-}
-
-/* Responsive Typography */
-@media (max-width: 640px) {
+    /* Page headings */
     .fi-header-heading {
         font-size: 1.5rem !important;
     }
@@ -169,59 +87,8 @@
     .fi-section-header-heading {
         font-size: 1.25rem !important;
     }
-}
 
-/* Fix notification panel on mobile */
-@media (max-width: 640px) {
-    .fi-dropdown-panel {
-        max-width: calc(100vw - 2rem) !important;
-        right: 1rem !important;
-    }
-}
-
-/* Responsive widgets layout */
-@media (max-width: 640px) {
-    /* Force full width for widgets */
-    .fi-wi {
-        grid-column: span 1 / span 1 !important;
-    }
-
-    /* Chart widgets responsive height */
-    .fi-wi-chart {
-        min-height: 250px !important;
-    }
-}
-
-/* Responsive pagination */
-@media (max-width: 640px) {
-    .fi-ta-pagination {
-        flex-direction: column !important;
-        gap: 1rem !important;
-    }
-
-    .fi-ta-pagination-records {
-        text-align: center !important;
-    }
-
-    /* Hide page number buttons on mobile, keep only prev/next */
-    .fi-pagination-items {
-        display: none !important;
-    }
-}
-
-/* Responsive filters */
-@media (max-width: 640px) {
-    .fi-ta-filters {
-        flex-direction: column !important;
-    }
-
-    .fi-ta-filter {
-        width: 100% !important;
-    }
-}
-
-/* Better spacing for mobile cards */
-@media (max-width: 640px) {
+    /* Section content */
     .fi-section-content {
         padding: 1rem !important;
     }
@@ -229,20 +96,56 @@
     .fi-section-header {
         padding: 1rem !important;
     }
-}
 
-/* Responsive column layout for forms */
-@media (max-width: 640px) {
-    /* Force single column for all form grids */
-    .fi-fo-grid,
-    .grid {
-        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    /* Breadcrumbs */
+    .fi-breadcrumbs {
+        flex-wrap: wrap !important;
     }
 }
 
-/* Fix sidebar toggle on mobile and tablet */
+/* ============================================
+   2. TABLET SIDEBAR (641px - 1024px)
+   ============================================ */
+@media (min-width: 641px) and (max-width: 1024px) {
+    /* Compact logo on tablet */
+    .fi-sidebar .fi-logo,
+    .fi-sidebar-header img,
+    .fi-sidebar-header .fi-logo,
+    .fi-sidebar-header a img {
+        max-height: 2rem !important;
+        height: 2rem !important;
+        max-width: 80px !important;
+        object-fit: contain !important;
+    }
+
+    .fi-sidebar-header {
+        min-height: 3rem !important;
+        max-height: 3rem !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    /* Hide brand text on tablet */
+    .fi-sidebar-header .fi-brand-name,
+    .fi-sidebar-header span:not(.fi-logo) {
+        display: none !important;
+    }
+
+    /* 2 columns for stats */
+    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    /* Main content padding */
+    .fi-main {
+        padding: 1.5rem !important;
+    }
+}
+
+/* ============================================
+   3. SIDEBAR BEHAVIOR (d1024px)
+   ============================================ */
 @media (max-width: 1024px) {
-    /* Sidebar should be fixed and slide in from left */
+    /* Sidebar overlay setup */
     .fi-sidebar {
         position: fixed !important;
         top: 0 !important;
@@ -251,18 +154,29 @@
         height: 100vh !important;
         z-index: 40 !important;
         transform: translateX(-100%) !important;
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important;
+        transition: transform 0.3s ease-in-out !important;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15) !important;
+        pointer-events: auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
     }
 
-    /* When sidebar is open, slide in */
+    /* Sidebar open state */
     .fi-sidebar-open .fi-sidebar,
-    [x-data*="sidebarOpen"] .fi-sidebar {
+    [x-data*="sidebarOpen"] .fi-sidebar,
+    body:has([data-sidebar-open="true"]) .fi-sidebar {
         transform: translateX(0) !important;
     }
 
-    /* Add backdrop overlay when sidebar is open - on body to avoid blocking sidebar */
+    /* All sidebar children are clickable */
+    .fi-sidebar * {
+        pointer-events: auto !important;
+    }
+
+    /* Dark backdrop behind sidebar */
     body:has(.fi-sidebar-open)::before,
-    body.fi-sidebar-open::before {
+    body.fi-sidebar-open::before,
+    body:has([data-sidebar-open="true"])::before {
         content: '' !important;
         position: fixed !important;
         top: 0 !important;
@@ -276,88 +190,185 @@
         pointer-events: auto !important;
     }
 
-    /* Ensure sidebar is above backdrop and clickable */
-    .fi-sidebar {
-        pointer-events: auto !important;
+    /* Prevent body scroll when sidebar is open */
+    .fi-sidebar-open,
+    body:has(.fi-sidebar-open),
+    body:has([data-sidebar-open="true"]) {
+        overflow: hidden !important;
     }
 
-    .fi-sidebar * {
-        pointer-events: auto !important;
-    }
-
-    /* Mobile menu toggle button styling */
-    .fi-sidebar-open-btn,
-    [data-sidebar-toggle] {
-        z-index: 50 !important;
-        min-width: 44px !important;
-        min-height: 44px !important;
-    }
-
-    /* Ensure content doesn't get pushed when sidebar opens */
+    /* Main content doesn't shift */
     .fi-main {
         margin-left: 0 !important;
         width: 100% !important;
     }
 
-    /* Hide sidebar close button on desktop */
-    .fi-sidebar-close {
-        display: block !important;
-        position: absolute !important;
-        top: 1rem !important;
-        right: 1rem !important;
+    /* Hamburger menu button */
+    .fi-sidebar-open-btn,
+    [data-sidebar-toggle],
+    button[x-on\:click*="sidebar"] {
         z-index: 50 !important;
-    }
-}
-
-/* Additional mobile sidebar improvements */
-@media (max-width: 640px) {
-    /* Sidebar takes more width on smaller phones */
-    .fi-sidebar {
-        width: 85% !important;
-        max-width: 300px !important;
-    }
-
-    /* Larger touch targets for mobile */
-    .fi-sidebar-item-button,
-    .fi-sidebar-item {
+        min-width: 44px !important;
         min-height: 44px !important;
-        touch-action: manipulation !important;
+        padding: 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
-    /* Better spacing for sidebar content */
-    .fi-sidebar-content {
-        padding-bottom: 2rem !important;
+    /* Topbar spacing */
+    .fi-topbar-start {
+        gap: 0.5rem !important;
+    }
+
+    /* Active navigation item styling */
+    .fi-sidebar-item.fi-active {
+        background-color: rgba(245, 158, 11, 0.1) !important;
+        border-left: 3px solid rgb(245, 158, 11) !important;
+    }
+
+    /* Custom scrollbar for sidebar */
+    .fi-sidebar::-webkit-scrollbar {
+        width: 4px !important;
+    }
+
+    .fi-sidebar::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+
+    .fi-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-radius: 2px !important;
+    }
+
+    .dark .fi-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2) !important;
     }
 }
 
-/* Responsive stat cards */
-@media (max-width: 640px) {
-    .fi-wi-stats-overview-stat {
-        padding: 1rem !important;
+/* ============================================
+   4. RTL (RIGHT-TO-LEFT) SUPPORT
+   ============================================ */
+@media (max-width: 1024px) {
+    [dir="rtl"] .fi-sidebar {
+        left: auto !important;
+        right: 0 !important;
+        transform: translateX(100%) !important;
+        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15) !important;
     }
 
-    .fi-wi-stats-overview-stat-value {
-        font-size: 1.5rem !important;
+    [dir="rtl"] .fi-sidebar-open .fi-sidebar,
+    [dir="rtl"][x-data*="sidebarOpen"] .fi-sidebar,
+    [dir="rtl"]:has([data-sidebar-open="true"]) .fi-sidebar {
+        transform: translateX(0) !important;
     }
 
-    .fi-wi-stats-overview-stat-description {
-        font-size: 0.75rem !important;
+    [dir="rtl"] .fi-sidebar-item.fi-active {
+        border-left: none !important;
+        border-right: 3px solid rgb(245, 158, 11) !important;
     }
 }
 
-/* Better scrolling on mobile */
+/* ============================================
+   5. FORMS (d640px)
+   ============================================ */
 @media (max-width: 640px) {
-    body {
-        -webkit-overflow-scrolling: touch !important;
+    /* Single column forms */
+    .fi-fo-grid,
+    .grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+
+    /* Form field labels */
+    .fi-fo-field-wrp-label {
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Form actions - stack vertically */
+    .fi-fo-actions {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .fi-fo-actions > * {
+        width: 100% !important;
+    }
+
+    /* Input fields - prevent iOS zoom */
+    .fi-select,
+    .fi-input {
+        min-height: 44px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* ============================================
+   6. TABLES (d640px)
+   ============================================ */
+@media (max-width: 640px) {
+    /* Horizontal scroll for tables */
+    .fi-ta {
+        overflow-x: auto !important;
     }
 
     .fi-ta-content {
         -webkit-overflow-scrolling: touch !important;
     }
+
+    /* Table cells - larger touch targets */
+    .fi-ta-cell {
+        padding: 1rem !important;
+    }
+
+    /* Table header actions - stack vertically */
+    .fi-ta-header-actions {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    /* Hide less important columns (4th column onwards) */
+    .fi-ta-cell:nth-child(n+4),
+    .fi-ta-header-cell:nth-child(n+4) {
+        display: none;
+    }
+
+    /* Pagination */
+    .fi-ta-pagination {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
+    .fi-ta-pagination-records {
+        text-align: center !important;
+    }
+
+    /* Hide page numbers on mobile, keep prev/next */
+    .fi-pagination-items {
+        display: none !important;
+    }
+
+    /* Filters */
+    .fi-ta-filters {
+        flex-direction: column !important;
+    }
+
+    .fi-ta-filter {
+        width: 100% !important;
+    }
 }
 
-/* Responsive action modals */
+/* ============================================
+   7. MODALS (d640px)
+   ============================================ */
 @media (max-width: 640px) {
+    /* Full screen modals */
+    .fi-modal {
+        margin: 0 !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        border-radius: 0 !important;
+    }
+
     .fi-modal-content {
         padding: 1.5rem !important;
     }
@@ -366,6 +377,7 @@
         padding: 1.5rem !important;
     }
 
+    /* Modal footer actions - stack vertically */
     .fi-modal-footer {
         flex-direction: column !important;
         gap: 0.5rem !important;
@@ -382,171 +394,75 @@
     }
 }
 
-/* RTL Support for Sidebar on Mobile */
-@media (max-width: 1024px) {
-    [dir="rtl"] .fi-sidebar {
-        left: auto !important;
-        right: 0 !important;
-        transform: translateX(100%) !important;
-    }
-
-    [dir="rtl"] .fi-sidebar-open .fi-sidebar,
-    [dir="rtl"][x-data*="sidebarOpen"] .fi-sidebar {
-        transform: translateX(0) !important;
-    }
-
-    [dir="rtl"] .fi-sidebar {
-        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1) !important;
-    }
-}
-
-/* Prevent body scroll when sidebar is open on mobile */
-@media (max-width: 1024px) {
-    .fi-sidebar-open,
-    body:has(.fi-sidebar-open) {
-        overflow: hidden !important;
-    }
-}
-
-/* Smooth scrolling for sidebar navigation */
-@media (max-width: 1024px) {
-    .fi-sidebar {
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: thin !important;
-    }
-
-    /* Hide scrollbar on mobile for cleaner look */
-    .fi-sidebar::-webkit-scrollbar {
-        width: 4px !important;
-    }
-
-    .fi-sidebar::-webkit-scrollbar-track {
-        background: transparent !important;
-    }
-
-    .fi-sidebar::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.2) !important;
-        border-radius: 2px !important;
-    }
-}
-
-/* Fix topbar spacing with hamburger menu */
-@media (max-width: 1024px) {
-    .fi-topbar-start {
-        gap: 0.5rem !important;
-    }
-
-    /* Hamburger menu button */
-    button[x-on\:click*="sidebar"],
-    .fi-sidebar-toggle {
-        padding: 0.5rem !important;
-        min-width: 44px !important;
-        min-height: 44px !important;
-        display: flex !important;
-        align-items: center !important;
+/* ============================================
+   8. BUTTONS & ACTIONS (d640px)
+   ============================================ */
+@media (max-width: 640px) {
+    /* Full width buttons */
+    .fi-btn {
+        width: 100% !important;
         justify-content: center !important;
     }
 }
 
-/* Drastically reduce logo on mobile - hide text completely */
+/* ============================================
+   9. WIDGETS (d640px)
+   ============================================ */
 @media (max-width: 640px) {
-    /* Hide the entire sidebar header/logo on mobile to save space */
-    .fi-sidebar-header {
-        display: none !important;
+    /* Widget spacing */
+    .fi-wi {
+        margin-bottom: 1rem !important;
+        grid-column: span 1 / span 1 !important;
     }
 
-    /* If you want to keep a tiny logo, use this instead: */
-    /* .fi-sidebar-header {
-        min-height: 3rem !important;
-        max-height: 3rem !important;
-        padding: 0.5rem 1rem !important;
-        display: flex !important;
-        align-items: center !important;
-        overflow: hidden !important;
-        background: transparent !important;
-    }
-
-    .fi-sidebar .fi-logo,
-    .fi-sidebar-header img,
-    .fi-sidebar-header .fi-logo,
-    .fi-sidebar-header a img,
-    .fi-sidebar img[alt*="logo" i],
-    .fi-sidebar img[src*="logo" i] {
-        max-height: 2rem !important;
-        height: 2rem !important;
-        max-width: 2rem !important;
-        width: 2rem !important;
-        object-fit: contain !important;
-        object-position: center !important;
-    }
-
-    .fi-sidebar-header .fi-brand-name,
-    .fi-sidebar-header span:not(.fi-logo),
-    .fi-sidebar-header p,
-    .fi-sidebar-header div:not(:has(img)) {
-        display: none !important;
-    }
-
-    .fi-sidebar-header a {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 0 !important;
-        max-height: 2rem !important;
-        overflow: hidden !important;
-    } */
-
-    /* Move navigation higher since logo is hidden */
-    .fi-sidebar-nav,
-    .fi-sidebar nav {
-        padding-top: 0.5rem !important;
+    /* Chart widgets */
+    .fi-wi-chart {
+        min-height: 250px !important;
     }
 }
 
-/* Make logo smaller on tablet sidebar */
-@media (min-width: 641px) and (max-width: 1024px) {
-    .fi-sidebar .fi-logo,
-    .fi-sidebar-header img,
-    .fi-sidebar-header .fi-logo,
-    .fi-sidebar-header a img {
-        max-height: 2.5rem !important;
-        height: 2.5rem !important;
-        max-width: 100px !important;
-        object-fit: contain !important;
-    }
-
-    .fi-sidebar-header {
-        min-height: 3.5rem !important;
-        max-height: 3.5rem !important;
-        padding: 0.5rem 1rem !important;
-    }
-
-    /* Hide brand text on tablet too */
-    .fi-sidebar-header .fi-brand-name,
-    .fi-sidebar-header span:not(.fi-logo) {
-        font-size: 0.75rem !important;
-        max-width: 120px !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
+/* ============================================
+   10. DROPDOWNS & NOTIFICATIONS (d640px)
+   ============================================ */
+@media (max-width: 640px) {
+    .fi-dropdown-panel {
+        max-width: calc(100vw - 2rem) !important;
+        right: 1rem !important;
     }
 }
 
-/* Better navigation active states on mobile */
-@media (max-width: 1024px) {
-    .fi-sidebar-item.fi-active {
-        background-color: rgba(245, 158, 11, 0.1) !important;
-        border-left: 3px solid rgb(245, 158, 11) !important;
-    }
-
-    [dir="rtl"] .fi-sidebar-item.fi-active {
-        border-left: none !important;
-        border-right: 3px solid rgb(245, 158, 11) !important;
+/* ============================================
+   11. IMAGES (d640px)
+   ============================================ */
+@media (max-width: 640px) {
+    .fi-fi-image,
+    img {
+        max-width: 100% !important;
+        height: auto !important;
     }
 }
 
-/* Safe area insets for notched phones */
+/* ============================================
+   12. TOUCH IMPROVEMENTS
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+    /* Minimum touch targets (44px × 44px) */
+    .fi-btn,
+    .fi-link,
+    .fi-ta-row {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+
+    /* Better scrolling on touch devices */
+    body {
+        -webkit-overflow-scrolling: touch !important;
+    }
+}
+
+/* ============================================
+   13. SAFE AREA INSETS (Notched Phones)
+   ============================================ */
 @supports (padding: max(0px)) {
     @media (max-width: 640px) {
         .fi-topbar {
@@ -562,5 +478,15 @@
             padding-left: max(1rem, env(safe-area-inset-left)) !important;
             padding-right: max(1rem, env(safe-area-inset-right)) !important;
         }
+    }
+}
+
+/* ============================================
+   14. DESKTOP (e1025px)
+   ============================================ */
+@media (min-width: 1025px) {
+    /* 3 columns for stats */
+    [data-filament-stats-overview-widget] .fi-wi-stats-overview-stat-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
 }
