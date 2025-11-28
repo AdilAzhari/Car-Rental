@@ -74,9 +74,13 @@ class VehicleForm
                             ->unique(ignoreRecord: true)
                             ->maxLength(20)
                             ->placeholder('VGM8715')
-                            ->helperText('Enter without spaces or dashes (e.g., VGM8715)')
+                            ->helperText('Auto-formatted: spaces and dashes removed, converted to uppercase')
                             ->suffixIcon('heroicon-m-identification')
-                            ->formatStateUsing(fn ($state) => strtoupper(str_replace([' ', '-'], '', $state ?? '')))
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function ($state, $set) {
+                                $formatted = strtoupper(str_replace([' ', '-'], '', $state ?? ''));
+                                $set('plate_number', $formatted);
+                            })
                             ->dehydrateStateUsing(fn ($state) => strtoupper(str_replace([' ', '-'], '', $state ?? ''))),
                     ])
                     ->columnSpanFull(),
