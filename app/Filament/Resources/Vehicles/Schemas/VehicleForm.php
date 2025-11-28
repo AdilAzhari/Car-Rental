@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\Vehicles\Schemas;
 
-use App\Enums\VehicleFuelType;
-use App\Enums\VehicleTransmission;
 use App\Enums\VehicleCategory;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -13,40 +11,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
 use App\Enums\VehicleStatus;
-use App\Filament\Resources\VehicleResource\Pages;
-use App\Filament\Resources\VehicleResource\RelationManagers;
-use App\Filament\Resources\Vehicles\Schemas\VehicleInfolist;
 use App\Models\User;
-use App\Models\Vehicle;
-use App\Services\FilamentQueryOptimizationService;
-use App\Services\TrafficViolationService;
-use BackedEnum;
-use Filament\Actions\Action;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\ViewField;
-use Filament\Resources\Resource;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Tables\Columns\BooleanColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Override;
-use UnitEnum;
-
 
 class VehicleForm
 {
@@ -100,8 +73,11 @@ class VehicleForm
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(20)
-                            ->placeholder(__('resources.plate_number'))
-                            ->suffixIcon('heroicon-m-identification'),
+                            ->placeholder('VGM8715')
+                            ->helperText('Enter without spaces or dashes (e.g., VGM8715)')
+                            ->suffixIcon('heroicon-m-identification')
+                            ->formatStateUsing(fn ($state) => strtoupper(str_replace([' ', '-'], '', $state ?? '')))
+                            ->dehydrateStateUsing(fn ($state) => strtoupper(str_replace([' ', '-'], '', $state ?? ''))),
                     ])
                     ->columnSpanFull(),
 
@@ -185,7 +161,7 @@ class VehicleForm
                     ->description(__('resources.ownership_pricing_description'))
                     ->icon('heroicon-m-currency-dollar')
                     ->schema([
-                        Grid::make(2)
+                        Grid::make()
                             ->schema([
                                 Select::make('owner_id')
                                     ->label(__('resources.vehicle_owner'))
@@ -194,7 +170,7 @@ class VehicleForm
                                     ->preload()
                                     ->required()
                                     ->createOptionForm([
-                                        Grid::make(2)
+                                        Grid::make()
                                             ->schema([
                                                 TextInput::make('name')
                                                     ->label(__('resources.name'))
@@ -250,7 +226,7 @@ class VehicleForm
                                             ]),
                                     ])
                                     ->createOptionUsing(function (array $data): int {
-                                        $user = User::create([
+                                        $user = User::query()->create([
                                             'name' => $data['name'],
                                             'email' => $data['email'],
                                             'phone' => $data['phone'] ?? null,
@@ -469,7 +445,7 @@ class VehicleForm
                                     ->suffixIcon('heroicon-m-clock'),
                             ]),
 
-                        // Traffic Violations Details View
+//                         Traffic Violations Details View
                         ViewField::make('traffic_violations_display')
                             ->label(__('resources.violation_details'))
                             ->view('filament.components.traffic-violations-display')
